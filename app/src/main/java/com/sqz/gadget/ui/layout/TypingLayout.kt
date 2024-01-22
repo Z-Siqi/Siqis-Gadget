@@ -1,5 +1,6 @@
 package com.sqz.gadget.ui.layout
 
+import android.os.Build
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.text2.input.placeCursorAtEnd
 import androidx.compose.foundation.text2.input.rememberTextFieldState
@@ -57,31 +59,35 @@ fun TypingLayout(modifier: Modifier = Modifier) {
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Spacer(modifier = modifier
-            .fillMaxSize()
             .imePadding()
             .onSizeChanged { size = it.height })
         Column(
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.statusBarsPadding()
         ) {
             Text(
                 text = "Fix BasicTextField2 Delete Text After Select All Error",
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center,
-                modifier = modifier.padding(top = 38.dp, start = 16.dp, end = 16.dp, bottom = 10.dp)
+                modifier = modifier.padding(16.dp)
             )
+            val support = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                ""
+            } else "(Maybe No Support)"
             Text(
                 modifier = modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp),
-                text = "Keyboard Height: $result"
+                text = "Keyboard Height$support: $result"
             )
         }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val bottom = 100.dp + (toDp - toDp * 0.2).dp
+            val calculateToDp = if (toDp == 0) 100.dp else 50.dp
+            val bottom = calculateToDp + toDp.dp
             Card(
                 modifier = modifier
                     .fillMaxSize()
