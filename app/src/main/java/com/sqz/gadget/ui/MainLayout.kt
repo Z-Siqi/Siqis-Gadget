@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sqz.gadget.R
 import com.sqz.gadget.ScreenActivity
+import com.sqz.gadget.TypingActivity
 
 @Composable
 fun AppLayout(modifier: Modifier = Modifier) {
@@ -46,6 +47,16 @@ fun AppLayout(modifier: Modifier = Modifier) {
                     text = "Check the Screen",
                     painter = R.drawable.screen,
                     contentDescription = "Screen",
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                )
+            }
+            item {
+                val intent = Intent(context, TypingActivity::class.java)
+                AppCard(
+                    intent = { context.startActivity(intent) },
+                    text = "Test Typing",
+                    painter = R.drawable.text,
+                    contentDescription = "text",
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                 )
             }
