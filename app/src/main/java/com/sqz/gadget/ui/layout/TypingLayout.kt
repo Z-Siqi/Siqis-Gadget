@@ -1,16 +1,16 @@
 package com.sqz.gadget.ui.layout
 
-import android.os.Build
+import android.content.Context
+import android.graphics.Rect
+import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.text2.input.placeCursorAtEnd
 import androidx.compose.foundation.text2.input.rememberTextFieldState
@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -29,9 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,16 +43,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TypingLayout(modifier: Modifier = Modifier) {
     val focus = LocalFocusManager.current
+    val currentPx = KeyboardHeight.currentPx
+    val currentDp = KeyboardHeight.currentDp
+    val result = if (KeyboardHeight.currentPx == 0) "Not Calculated" else "$currentPx.px, $currentDp.dp"
 
-    var defaultSize by remember { mutableIntStateOf(0) }
-    var size by remember { mutableIntStateOf(0) }
-    val keyboardSize = defaultSize - size
-    val toDp = (keyboardSize / LocalDensity.current.density).toInt()
-    val result = if (keyboardSize == 0) "Not Calculated" else "$keyboardSize.px, $toDp.dp"
-
-    Spacer(modifier = modifier
-        .fillMaxSize()
-        .onSizeChanged { defaultSize = it.height })
     Surface(
         modifier = modifier
             .fillMaxSize()
@@ -58,13 +55,10 @@ fun TypingLayout(modifier: Modifier = Modifier) {
             },
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
-        Spacer(modifier = modifier
-            .imePadding()
-            .onSizeChanged { size = it.height })
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.statusBarsPadding()
+            modifier = modifier
         ) {
             Text(
                 text = "Fix BasicTextField2 Delete Text After Select All Error",
@@ -72,22 +66,18 @@ fun TypingLayout(modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Center,
                 modifier = modifier.padding(16.dp)
             )
-            val support = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                ""
-            } else "(Maybe No Support)"
             Text(
                 modifier = modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp),
-                text = "Keyboard Height$support: $result"
+                text = "Keyboard Height: $result"
             )
         }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val calculateToDp = if (toDp == 0) 100.dp else 50.dp
-            val bottom = calculateToDp + toDp.dp
+            val bottom = currentDp.dp + 50.dp
             Card(
                 modifier = modifier
                     .fillMaxSize()
@@ -118,5 +108,64 @@ fun TypingLayout(modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
+}
+
+@Suppress("unused")
+class KeyboardHeight {
+    companion object {
+        val currentPx @Composable get() = KeyboardHeight().currentPx()
+        val currentDp @Composable get() = KeyboardHeight().toCalculateDp()
+        val isVisible @Composable get() = KeyboardHeight().isVisible()
+    }
+
+    @Composable
+    private fun isVisible(): Boolean {
+        return KeyboardHeight().currentPx() != 0
+    }
+
+    @Composable
+    private fun toCalculateDp(): Int {
+        val keyboardHeight = KeyboardHeight().currentPx()
+        val density = LocalDensity.current.density
+        return (keyboardHeight / density).toInt()
+    }
+
+    @Composable
+    private fun currentPx(): Int {
+        val context = LocalContext.current
+        val localScreenHeight =
+            (LocalConfiguration.current.screenHeightDp * LocalDensity.current.density).toInt()
+        val rootView = LocalView.current
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val returnZero = 0
+        var height by remember { mutableIntStateOf(0) }
+        var notZero by remember { mutableStateOf(false) }
+        var calculateNotZeroValue by remember { mutableIntStateOf(0) }
+        DisposableEffect(rootView, inputMethodManager) {
+            val listener = ViewTreeObserver.OnGlobalLayoutListener {
+                val rect = Rect()
+                rootView.getWindowVisibleDisplayFrame(rect)
+                val keyboardNowHeight = localScreenHeight - rect.bottom
+                val keyboardHeight = if (keyboardNowHeight < 0) {
+                    notZero = true
+                    calculateNotZeroValue = keyboardNowHeight * -1
+                    returnZero
+                } else {
+                    if (notZero) {
+                        keyboardNowHeight + calculateNotZeroValue
+                    } else {
+                        keyboardNowHeight
+                    }
+                }
+                height = keyboardHeight
+            }
+            rootView.viewTreeObserver.addOnGlobalLayoutListener(listener)
+            onDispose {
+                rootView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
+            }
+        }
+        return height
     }
 }
