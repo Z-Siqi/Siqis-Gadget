@@ -15,6 +15,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,11 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.sqz.gadget.R
 
 @SuppressLint("SwitchIntDef")
 @Composable
-fun ScreenLayout(modifier: Modifier = Modifier) {
+fun ScreenLayout(navController: NavController, modifier: Modifier = Modifier) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val screenHigh = LocalConfiguration.current.screenHeightDp
     val smallestScreenWidthDp = LocalConfiguration.current.smallestScreenWidthDp
@@ -60,8 +65,20 @@ fun ScreenLayout(modifier: Modifier = Modifier) {
     }
     Surface(
         modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surfaceVariant
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ) {
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = modifier.padding(10.dp)
+            ) {
+                Icon(painter = painterResource(R.drawable.back), contentDescription = "back")
+            }
+        }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally

@@ -22,22 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ScreenActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".TypingActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

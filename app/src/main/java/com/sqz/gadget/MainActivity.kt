@@ -6,7 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.AppLayout
+import com.sqz.gadget.ui.layout.CalculateLayout
+import com.sqz.gadget.ui.layout.ScreenLayout
+import com.sqz.gadget.ui.layout.TypingLayout
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +23,24 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    AppLayout()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = "AppLayout"
+                    ) {
+                        composable("AppLayout") {
+                            AppLayout(navController)
+                        }
+                        composable("ScreenLayout") {
+                            ScreenLayout(navController)
+                        }
+                        composable("TypingLayout") {
+                            TypingLayout(navController)
+                        }
+                        composable("CalculateLayout") {
+                            CalculateLayout(navController)
+                        }
+                    }
                 }
             }
         }

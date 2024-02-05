@@ -1,6 +1,5 @@
 package com.sqz.gadget.ui
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -22,28 +21,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.R
-import com.sqz.gadget.ScreenActivity
-import com.sqz.gadget.TypingActivity
 
 @Composable
-fun AppLayout(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun AppLayout(navController: NavController, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         LazyColumn {
             item {
-                val intent = Intent(context, ScreenActivity::class.java)
                 AppCard(
-                    intent = { context.startActivity(intent) },
+                    intent = { navController.navigate("CalculateLayout") },
+                    text = "Calculate Area of Circle",
+                    painter = R.drawable.calculate,
+                    contentDescription = "Calculate",
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                )
+            }
+            item {
+                AppCard(
+                    intent = { navController.navigate("ScreenLayout") },
                     text = "Check the Screen",
                     painter = R.drawable.screen,
                     contentDescription = "Screen",
@@ -51,9 +56,8 @@ fun AppLayout(modifier: Modifier = Modifier) {
                 )
             }
             item {
-                val intent = Intent(context, TypingActivity::class.java)
                 AppCard(
-                    intent = { context.startActivity(intent) },
+                    intent = { navController.navigate("TypingLayout") },
                     text = "Test Typing",
                     painter = R.drawable.text,
                     contentDescription = "text",
@@ -122,5 +126,6 @@ private fun AppCard(
 @Preview
 @Composable
 private fun Preview() {
-    AppLayout()
+    val navController = rememberNavController()
+    AppLayout(navController)
 }
