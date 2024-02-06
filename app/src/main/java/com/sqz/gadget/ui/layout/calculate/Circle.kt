@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -77,13 +78,14 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
             modifier = modifier
                 .align(Alignment.Start)
                 .padding(start = 50.dp),
-            text = "Calculate The Circle of"
+            text = "Calculate The Circle of",
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.height(8.dp))
         SingleChoiceSegmentedButtonRow(
             modifier = modifier
                 .fillMaxWidth()
-                .height(38.dp)
+                .height(50.dp)
                 .padding(start = 45.dp, end = 45.dp),
             space = 8.dp
         ) {
@@ -111,7 +113,7 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
         }
         if (selectedIndex != -1) {
             Spacer(modifier = modifier.height(8.dp))
-            Text(text = "Currently Known Units")
+            Text(text = "Current Units")
             Spacer(modifier = modifier.height(3.dp))
             SingleChoiceSegmentedButtonRow(
                 modifier = modifier
@@ -198,13 +200,13 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                                 0 -> {
                                     val pi = 3.141592653589793
                                     val calculate = sqrt((4 * input) / pi)
-                                    TextOnCard(text = "= $calculate")
+                                    TextOnCard(text = "≈ $calculate")
                                 }
                                 // d = C/π
                                 1 -> {
                                     val pi = 3.141592653589793
                                     val calculate = input / pi
-                                    TextOnCard(text = "= $calculate")
+                                    TextOnCard(text = "≈ $calculate")
                                 }
                                 // d = 2r
                                 2 -> {
@@ -244,7 +246,7 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                                 // r = d/2
                                 1 -> {
                                     val calculate = input / 2
-                                    TextOnCard(text = "≈ $calculate")
+                                    TextOnCard(text = "= $calculate")
                                 }
                                 // r = C/2π
                                 2 -> {
@@ -294,6 +296,7 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                                 fontSize = 10.sp,
                                 modifier = modifier.align(Alignment.BottomEnd),
                                 lineHeight = 8.sp,
+                                maxLines = 1,
                                 textAlign = TextAlign.Justify
                             )
                         }

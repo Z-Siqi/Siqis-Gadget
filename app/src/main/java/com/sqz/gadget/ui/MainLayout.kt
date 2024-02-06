@@ -3,26 +3,37 @@ package com.sqz.gadget.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,42 +43,91 @@ import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.R
 import com.sqz.gadget.ui.layout.calculate.ValueState
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AppLayout(valueState: ValueState, navController: NavController, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surfaceVariant
-    ) {
-        LazyColumn {
-            item {
-                AppCard(
-                    intent = {
-                        valueState.calculateMode = "circle"
-                        navController.navigate("CalculateLayout")
-                    },
-                    text = "Calculate The Circle",
-                    painter = R.drawable.calculate,
-                    contentDescription = "Circle",
-                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
-                )
-            }
-            item {
-                AppCard(
-                    intent = { navController.navigate("ScreenLayout") },
-                    text = "Check the Screen",
-                    painter = R.drawable.screen,
-                    contentDescription = "Screen",
-                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
-                )
-            }
-            item {
-                AppCard(
-                    intent = { navController.navigate("TypingLayout") },
-                    text = "Test Typing",
-                    painter = R.drawable.text,
-                    contentDescription = "text",
-                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
-                )
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    Scaffold(
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            LargeTopAppBar(
+                modifier = modifier
+                    .pointerInteropFilter(null) { true },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    scrolledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.secondary,
+                ),
+                title = {
+                    Text(
+                        text = "Siqi's Gadget",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                },
+                scrollBehavior = scrollBehavior,
+            )
+        },
+        contentWindowInsets = WindowInsets.statusBars
+    ) { innerPadding ->
+        Surface(
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            color = MaterialTheme.colorScheme.surfaceVariant
+        ) {
+            LazyColumn {
+                item {
+                    Text(
+                        text = "Calculate & Conversion",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = modifier.padding(top = 16.dp, start = 18.dp)
+                    )
+                }
+                item {
+                    AppCard(
+                        intent = {
+                            valueState.calculateMode = "circle"
+                            navController.navigate("CalculateLayout")
+                        },
+                        text = "Calculate The Circle",
+                        painter = R.drawable.circle,
+                        contentDescription = "Circle",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
+                item {
+                    Text(
+                        text = "Dev-Related Tools",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = modifier.padding(top = 16.dp, start = 18.dp)
+                    )
+                }
+                item {
+                    AppCard(
+                        intent = { navController.navigate("ScreenLayout") },
+                        text = "Check the Screen",
+                        painter = R.drawable.screen,
+                        contentDescription = "Screen",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
+                item {
+                    AppCard(
+                        intent = { navController.navigate("TypingLayout") },
+                        text = "Test Typing",
+                        painter = R.drawable.text,
+                        contentDescription = "text",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
             }
         }
     }
@@ -118,11 +178,11 @@ private fun AppCard(
             )
             Icon(
                 painter = painterResource(painter),
-                contentDescription = contentDescription,
                 modifier = modifier
                     .fillMaxSize()
                     .wrapContentWidth(Alignment.End)
                         then screenIcon,
+                contentDescription = contentDescription,
             )
         }
     }

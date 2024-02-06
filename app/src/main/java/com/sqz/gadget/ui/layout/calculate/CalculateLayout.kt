@@ -38,6 +38,7 @@ fun CalculateLayout(valueState: ValueState, navController: NavController, modifi
         Box {
             when (valueState.calculateMode) {
                 "circle" -> Circle(valueState)
+                "hormone_units_conversion" -> HormoneUnitConversion(valueState)
                 else -> Log.e("SqGadgetTag", "Error to load calculate function")
             }
             Column(
