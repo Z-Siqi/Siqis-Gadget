@@ -26,12 +26,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.R
+import com.sqz.gadget.ui.layout.calculate.ValueState
 
 @Composable
-fun AppLayout(navController: NavController, modifier: Modifier = Modifier) {
+fun AppLayout(valueState: ValueState, navController: NavController, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surfaceVariant
@@ -39,10 +41,13 @@ fun AppLayout(navController: NavController, modifier: Modifier = Modifier) {
         LazyColumn {
             item {
                 AppCard(
-                    intent = { navController.navigate("CalculateLayout") },
-                    text = "Calculate Area of Circle",
+                    intent = {
+                        valueState.calculateMode = "circle"
+                        navController.navigate("CalculateLayout")
+                    },
+                    text = "Calculate The Circle",
                     painter = R.drawable.calculate,
-                    contentDescription = "Calculate",
+                    contentDescription = "Circle",
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                 )
             }
@@ -78,9 +83,9 @@ private fun AppCard(
     modifier: Modifier = Modifier,
 ) {
     val screenCard = if (LocalConfiguration.current.screenWidthDp < 368) {
-        modifier.height(110.dp)
+        modifier.height(100.dp)
     } else {
-        modifier.height(85.dp)
+        modifier.height(75.dp)
     }
     val screenIcon = if (LocalConfiguration.current.screenWidthDp < 392) {
         modifier
@@ -127,5 +132,6 @@ private fun AppCard(
 @Composable
 private fun Preview() {
     val navController = rememberNavController()
-    AppLayout(navController)
+    val valueState: ValueState = viewModel()
+    AppLayout(valueState, navController)
 }

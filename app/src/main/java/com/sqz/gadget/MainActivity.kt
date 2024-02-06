@@ -6,19 +6,22 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.AppLayout
-import com.sqz.gadget.ui.layout.CalculateLayout
+import com.sqz.gadget.ui.layout.calculate.CalculateLayout
 import com.sqz.gadget.ui.layout.ScreenLayout
 import com.sqz.gadget.ui.layout.TypingLayout
+import com.sqz.gadget.ui.layout.calculate.ValueState
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val valueState: ValueState = viewModel()
             SiqisGadgetTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
@@ -29,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = "AppLayout"
                     ) {
                         composable("AppLayout") {
-                            AppLayout(navController)
+                            AppLayout(valueState, navController)
                         }
                         composable("ScreenLayout") {
                             ScreenLayout(navController)
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
                             TypingLayout(navController)
                         }
                         composable("CalculateLayout") {
-                            CalculateLayout(navController)
+                            CalculateLayout(valueState, navController)
                         }
                     }
                 }
