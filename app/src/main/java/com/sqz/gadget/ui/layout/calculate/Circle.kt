@@ -54,7 +54,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sqz.gadget.ui.layout.KeyboardHeight
+import com.sqz.gadget.KeyboardHeight
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -350,7 +350,12 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(start = 50.dp, end = 50.dp),
-            shape = CircleShape
+            shape = CircleShape,
+            colors = if (secondSelectedIndex == -1) {
+                CardDefaults.outlinedCardColors(MaterialTheme.colorScheme.surfaceContainerHighest)
+            } else {
+                CardDefaults.outlinedCardColors()
+            }
         ) {
             BasicTextField2(
                 modifier = modifier
