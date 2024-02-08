@@ -102,6 +102,18 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                     )
                 }
                 item {
+                    AppCard(
+                        intent = {
+                            valueState.calculateMode = "hormone_units_conversion"
+                            navController.navigate("CalculateLayout")
+                        },
+                        text = "Hormone Units Conversion",
+                        painter = R.drawable.calculate,
+                        contentDescription = "Circle",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
+                item {
                     Text(
                         text = "Dev-Related Tools",
                         fontWeight = FontWeight.ExtraBold,

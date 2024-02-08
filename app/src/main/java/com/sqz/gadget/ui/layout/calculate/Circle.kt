@@ -1,5 +1,6 @@
 package com.sqz.gadget.ui.layout.calculate
 
+import android.os.Build
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -357,6 +360,13 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                 CardDefaults.outlinedCardColors()
             }
         ) {
+            val isNightModeActive =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) LocalConfiguration.current.isNightModeActive else false
+            val textStyle = if (isNightModeActive) {
+                TextStyle(fontSize = 23.sp).copy(Color.White)
+            } else {
+                TextStyle(fontSize = 23.sp)
+            }
             BasicTextField2(
                 modifier = modifier
                     .fillMaxSize()
@@ -369,7 +379,7 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                     ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
-                textStyle = TextStyle(fontSize = 23.sp),
+                textStyle = textStyle,
                 inputTransformation = InputTransformation.byValue { current, new ->
                     if (new.any { it == '.' } && new.contains("""\d""".toRegex())) {
                         if (new.count { it == '.' } <= 1) {

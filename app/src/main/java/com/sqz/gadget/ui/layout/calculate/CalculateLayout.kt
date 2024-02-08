@@ -36,6 +36,7 @@ fun CalculateLayout(valueState: ValueState, navController: NavController, modifi
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Box {
+            valueState.calculateState = false
             when (valueState.calculateMode) {
                 "circle" -> Circle(valueState)
                 "hormone_units_conversion" -> HormoneUnitConversion(valueState)
