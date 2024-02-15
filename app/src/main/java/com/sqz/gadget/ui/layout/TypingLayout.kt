@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text2.BasicTextField2
-import androidx.compose.foundation.text2.input.placeCursorAtEnd
 import androidx.compose.foundation.text2.input.rememberTextFieldState
-import androidx.compose.foundation.text2.input.selectAll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -21,10 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -72,7 +66,7 @@ fun TypingLayout(navController: NavController, modifier: Modifier = Modifier) {
         ) {
             Spacer(modifier = modifier.height(38.dp))
             Text(
-                text = "Fix BasicTextField2 Delete Text After Select All Error",
+                text = "BasicTextField2",
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center,
                 modifier = modifier.padding(16.dp)
@@ -100,18 +94,6 @@ fun TypingLayout(navController: NavController, modifier: Modifier = Modifier) {
                     modifier = modifier.padding(16.dp)
                 ) {
                     val text2 = rememberTextFieldState()
-                    var fixChooseAll by remember { mutableStateOf(false) }
-                    if (
-                        (!fixChooseAll) &&
-                        (text2.text.selectionInChars.length == text2.text.length) &&
-                        (text2.text.isNotEmpty())
-                    ) {
-                        text2.edit { placeCursorAtEnd() }
-                        text2.edit { selectAll() }
-                        fixChooseAll = true
-                    } else if (text2.text.selectionInChars.length < text2.text.length) {
-                        fixChooseAll = false
-                    }
                     BasicTextField2(
                         state = text2,
                         modifier.fillMaxSize()
