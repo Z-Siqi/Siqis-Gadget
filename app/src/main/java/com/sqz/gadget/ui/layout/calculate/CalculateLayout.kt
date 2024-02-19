@@ -1,6 +1,5 @@
 package com.sqz.gadget.ui.layout.calculate
 
-import android.util.Log
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +11,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -27,6 +30,8 @@ import com.sqz.gadget.R
 @Composable
 fun CalculateLayout(valueState: ValueState, navController: NavController, modifier: Modifier = Modifier) {
     val focus = LocalFocusManager.current
+    var calculateMode by remember { mutableStateOf("") }
+    calculateMode = valueState.calculateMode
     Surface(
         modifier = modifier
             .fillMaxSize()
@@ -37,10 +42,10 @@ fun CalculateLayout(valueState: ValueState, navController: NavController, modifi
     ) {
         Box {
             valueState.calculateState = false
-            when (valueState.calculateMode) {
+            when (calculateMode) {
                 "circle" -> Circle(valueState)
                 "hormone_units_conversion" -> HormoneUnitConversion(valueState)
-                else -> Log.e("SqGadgetTag", "Error to load calculate function")
+                else -> navController.popBackStack()
             }
             Column(
                 modifier = modifier.fillMaxSize(),

@@ -11,4 +11,3 @@ class ValueState : ViewModel() {
     var calculateState by mutableStateOf(false)
     var calculateMode by mutableStateOf("")
 }
-
