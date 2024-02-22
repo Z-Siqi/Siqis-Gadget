@@ -21,13 +21,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicTextField2
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.byValue
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.text2.BasicTextField2
-import androidx.compose.foundation.text2.input.InputTransformation
-import androidx.compose.foundation.text2.input.byValue
-import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
@@ -295,7 +295,8 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
         }
         Spacer(modifier = modifier.height(10.dp))
         val cardHeight = when (LocalConfiguration.current.screenHeightDp) {
-            in 0..610 -> 238.dp
+            in 0..570 -> 238.dp
+            in 571..610 -> 268.dp
             in 611..850 -> 330.dp
             else -> 350.dp
         }
