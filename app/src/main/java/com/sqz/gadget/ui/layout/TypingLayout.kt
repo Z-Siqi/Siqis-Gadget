@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField2
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -91,7 +93,9 @@ fun TypingLayout(navController: NavController, modifier: Modifier = Modifier) {
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
             ) {
                 Column(
-                    modifier = modifier.padding(16.dp)
+                    modifier = modifier
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
                     val text2 = rememberTextFieldState()
                     BasicTextField2(

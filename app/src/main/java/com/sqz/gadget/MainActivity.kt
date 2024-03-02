@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.AppLayout
 import com.sqz.gadget.ui.layout.calculate.CalculateLayout
 import com.sqz.gadget.ui.layout.ScreenLayout
+import com.sqz.gadget.ui.layout.SystemInfoLayout
 import com.sqz.gadget.ui.layout.TypingLayout
 import com.sqz.gadget.ui.layout.calculate.ValueState
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
@@ -42,12 +43,17 @@ class MainActivity : ComponentActivity() {
                             ScreenLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
                         }
+                        composable("SystemInfoLayout") {
+                            SystemInfoLayout(navController)
+                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
+                        }
                         composable("CalculateLayout") {
                             CalculateLayout(valueState, navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
                         }
                         composable("TypingLayout") {
                             TypingLayout(navController)
+                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
                         }
                     }
                 }

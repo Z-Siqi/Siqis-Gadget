@@ -57,7 +57,7 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                     .pointerInteropFilter(null) { true },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    scrolledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.secondary,
                 ),
                 title = {
@@ -127,6 +127,15 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                         intent = { navController.navigate("ScreenLayout") },
                         text = "Check the Screen",
                         painter = R.drawable.screen,
+                        contentDescription = "Screen",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
+                item {
+                    AppCard(
+                        intent = { navController.navigate("SystemInfoLayout") },
+                        text = "System Information",
+                        painter = R.drawable.system_info,
                         contentDescription = "Screen",
                         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )

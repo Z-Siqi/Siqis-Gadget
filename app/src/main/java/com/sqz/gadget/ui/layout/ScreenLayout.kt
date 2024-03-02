@@ -63,6 +63,11 @@ fun ScreenLayout(navController: NavController, modifier: Modifier = Modifier) {
     } else {
         false
     }
+    val isScreenWideColorGamut = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        LocalConfiguration.current.isScreenWideColorGamut
+    } else {
+        "N/A: system must more than 26"
+    }
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surfaceContainer
@@ -86,7 +91,7 @@ fun ScreenLayout(navController: NavController, modifier: Modifier = Modifier) {
             Card(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(50.dp, 100.dp, 50.dp, 100.dp),
+                    .padding(50.dp, 100.dp, 50.dp, 80.dp),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer),
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
             ) {
@@ -112,7 +117,8 @@ fun ScreenLayout(navController: NavController, modifier: Modifier = Modifier) {
                         Text(text = "Current running mode type: UI_MODE_$currentModeType")
                         HorizontalDivider()
                         Text(text = "Currently configured night mode: $nightMode")
-
+                        HorizontalDivider()
+                        Text(text = "Screen wide color gamut support: $isScreenWideColorGamut")
                     }
                 }
             }
