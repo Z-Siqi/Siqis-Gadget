@@ -1,6 +1,7 @@
 package com.sqz.gadget.ui.layout
 
 import android.os.Build
+import android.system.Os
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sqz.gadget.R
@@ -29,8 +31,14 @@ import com.sqz.gadget.R
 fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier) {
     val sdkInt = Build.VERSION.SDK_INT
     val androidVersion = Build.VERSION.RELEASE
-    val securityPatch = Build.VERSION.SECURITY_PATCH
+    val device = Build.DEVICE
     val codename = Build.VERSION.CODENAME
+    val securityPatch = Build.VERSION.SECURITY_PATCH
+    val osUname = Os.uname().release
+    val fingerprint = Build.FINGERPRINT
+    val model = Build.MODEL
+    val product = Build.PRODUCT
+    val id = Build.ID
 
     Surface(
         modifier = modifier.fillMaxSize(),
@@ -45,7 +53,7 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
                 onClick = { navController.popBackStack() },
                 modifier = modifier.padding(10.dp)
             ) {
-                Icon(painter = painterResource(R.drawable.back), contentDescription = "back")
+                Icon(painterResource(R.drawable.back), stringResource(R.string.back))
             }
         }
         Column(
@@ -70,9 +78,21 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
                         HorizontalDivider()
                         Text(text = "Android version: $androidVersion")
                         HorizontalDivider()
+                        Text(text = "Device: $device")
+                        HorizontalDivider()
+                        Text(text = "Development codename: $codename")
+                        HorizontalDivider()
                         Text(text = "Security patch level: $securityPatch")
                         HorizontalDivider()
-                        Text(text = "Current development codename: $codename")
+                        Text(text = "OS release (Kernel): $osUname")
+                        HorizontalDivider()
+                        Text(text = "Fingerprint: $fingerprint")
+                        HorizontalDivider()
+                        Text(text = "Model: $model")
+                        HorizontalDivider()
+                        Text(text = "Product: $product")
+                        HorizontalDivider()
+                        Text(text = "Id: $id")
                     }
                 }
             }

@@ -174,25 +174,23 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                         input = (textFieldState.text.toString().toFloat())
                         valueState.onCalculateClick = false
                     }
+                    val pi = 3.141592653589793
                     SelectionContainer (modifier = modifier.fillMaxSize()) {
                         when (selectedIndex) {
                             // Area
                             0 -> when (secondSelectedIndex) {
                                 // A = π(d/2)^2
                                 0 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = pi * (input / 2).pow(2)
                                     TextOnCard(text = "≈ $calculate")
                                 }
                                 // A = (C^2)/(4π)
                                 1 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = (input.pow(2)) / (4 * pi)
                                     TextOnCard(text = "≈ $calculate")
                                 }
                                 // A = πr^2
                                 2 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = pi * input.pow(2)
                                     TextOnCard(text = "≈ $calculate")
                                 }
@@ -201,13 +199,11 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                             1 -> when (secondSelectedIndex) {
                                 // d = √4A/π
                                 0 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = sqrt((4 * input) / pi)
                                     TextOnCard(text = "≈ $calculate")
                                 }
                                 // d = C/π
                                 1 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = input / pi
                                     TextOnCard(text = "≈ $calculate")
                                 }
@@ -221,19 +217,16 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                             2 -> when (secondSelectedIndex) {
                                 // C = 2√πA
                                 0 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = 2 * sqrt(pi * input)
                                     TextOnCard(text = "≈ $calculate")
                                 }
                                 // C = πd
                                 1 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = pi * input
                                     TextOnCard(text = "≈ $calculate")
                                 }
                                 // C = 2πr
                                 2 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = 2 * pi * input
                                     TextOnCard(text = "≈ $calculate")
                                 }
@@ -242,7 +235,6 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                             3 -> when (secondSelectedIndex) {
                                 // r = √A/π
                                 0 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = sqrt(input / pi)
                                     TextOnCard(text = "≈ $calculate")
                                 }
@@ -253,7 +245,6 @@ fun Circle(valueState: ValueState, modifier: Modifier = Modifier) {
                                 }
                                 // r = C/2π
                                 2 -> {
-                                    val pi = 3.141592653589793
                                     val calculate = input / (2 * pi)
                                     TextOnCard(text = "≈ $calculate")
                                 }

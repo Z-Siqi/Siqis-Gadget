@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sqz.gadget.R
@@ -81,7 +82,7 @@ fun ScreenLayout(navController: NavController, modifier: Modifier = Modifier) {
                 onClick = { navController.popBackStack() },
                 modifier = modifier.padding(10.dp)
             ) {
-                Icon(painter = painterResource(R.drawable.back), contentDescription = "back")
+                Icon(painterResource(R.drawable.back), stringResource(R.string.back))
             }
         }
         Column(

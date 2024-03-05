@@ -298,7 +298,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
             in 0..570 -> 238.dp
             in 571..610 -> 268.dp
             in 611..850 -> 330.dp
-            else -> 350.dp
+            else -> 360.dp
         }
         Card(
             modifier = modifier

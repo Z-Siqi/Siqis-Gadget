@@ -11,8 +11,8 @@ android {
         applicationId = "com.sqz.gadget"
         minSdk = 24
         targetSdk = 34
-        versionCode = 19
-        versionName = "0.1.9"
+        versionCode = 20
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

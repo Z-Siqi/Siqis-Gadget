@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sq Gadget</string>
+    <string name="app_full_name">Siqi\'s Gadget</string>
+    <string name="back">back</string>
 </resources>

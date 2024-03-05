@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -58,7 +59,7 @@ fun TypingLayout(navController: NavController, modifier: Modifier = Modifier) {
                 onClick = { navController.popBackStack() },
                 modifier = modifier.padding(10.dp)
             ) {
-                Icon(painter = painterResource(R.drawable.back), contentDescription = "back")
+                Icon(painterResource(R.drawable.back), stringResource(R.string.back))
             }
         }
         Column(
