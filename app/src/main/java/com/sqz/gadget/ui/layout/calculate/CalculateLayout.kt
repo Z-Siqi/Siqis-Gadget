@@ -50,6 +50,7 @@ fun CalculateLayout(
             when (calculateMode) {
                 "circle" -> Circle(valueState)
                 "hormone_units_conversion" -> HormoneUnitConversion(valueState)
+                "unit_of_length" -> LengthUnitConversion()
                 else -> navController.popBackStack()
             }
             Column(

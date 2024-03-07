@@ -41,6 +41,7 @@ class KeyboardHeight {
         val context = LocalContext.current
         val localScreenHeight =
             (LocalConfiguration.current.screenHeightDp * LocalDensity.current.density).toInt()
+        val screenHeightDp = LocalConfiguration.current.screenHeightDp
         val rootView = LocalView.current
         val inputMethodManager =
             context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -52,7 +53,9 @@ class KeyboardHeight {
             val listener = ViewTreeObserver.OnGlobalLayoutListener {
                 val rect = Rect()
                 rootView.getWindowVisibleDisplayFrame(rect)
-                val keyboardNowHeight = localScreenHeight - rect.bottom
+                val keyboardNowHeight = if (screenHeightDp >= 680) {
+                    localScreenHeight - rect.bottom + rect.top
+                } else localScreenHeight - rect.bottom
                 val keyboardHeight = if (keyboardNowHeight < 0) {
                     notZero = true
                     calculateNotZeroValue = keyboardNowHeight * -1

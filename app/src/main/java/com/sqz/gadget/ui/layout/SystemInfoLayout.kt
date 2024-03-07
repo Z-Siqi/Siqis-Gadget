@@ -32,13 +32,16 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
     val sdkInt = Build.VERSION.SDK_INT
     val androidVersion = Build.VERSION.RELEASE
     val device = Build.DEVICE
+    val model = Build.MODEL
     val codename = Build.VERSION.CODENAME
+    val id = Build.ID
+    val machine = Os.uname().machine
     val securityPatch = Build.VERSION.SECURITY_PATCH
     val osUname = Os.uname().release
     val fingerprint = Build.FINGERPRINT
-    val model = Build.MODEL
     val product = Build.PRODUCT
-    val id = Build.ID
+    val version = Os.uname().version
+    val sysName = Os.uname().sysname
 
     Surface(
         modifier = modifier.fillMaxSize(),
@@ -63,7 +66,7 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
             Card(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(50.dp, 100.dp, 50.dp, 80.dp),
+                    .padding(50.dp, 80.dp, 50.dp, 50.dp),
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer),
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
             ) {
@@ -80,7 +83,13 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
                         HorizontalDivider()
                         Text(text = "Device: $device")
                         HorizontalDivider()
+                        Text(text = "Model: $model")
+                        HorizontalDivider()
                         Text(text = "Development codename: $codename")
+                        HorizontalDivider()
+                        Text(text = "Build Number (id): $id")
+                        HorizontalDivider()
+                        Text(text = "Device architecture: $machine")
                         HorizontalDivider()
                         Text(text = "Security patch level: $securityPatch")
                         HorizontalDivider()
@@ -88,11 +97,11 @@ fun SystemInfoLayout(navController: NavController, modifier: Modifier = Modifier
                         HorizontalDivider()
                         Text(text = "Fingerprint: $fingerprint")
                         HorizontalDivider()
-                        Text(text = "Model: $model")
-                        HorizontalDivider()
                         Text(text = "Product: $product")
                         HorizontalDivider()
-                        Text(text = "Id: $id")
+                        Text(text = "The OS version: $version")
+                        HorizontalDivider()
+                        Text(text = "OS name (sys-name): $sysName")
                     }
                 }
             }

@@ -105,6 +105,18 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                 item {
                     AppCard(
                         intent = {
+                            valueState.calculateMode = "unit_of_length"
+                            navController.navigate("CalculateLayout")
+                        },
+                        text = "Length Unit Conversion",
+                        painter = R.drawable.length,
+                        contentDescription = "Circle",
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                }
+                item {
+                    AppCard(
+                        intent = {
                             valueState.calculateMode = "hormone_units_conversion"
                             navController.navigate("CalculateLayout")
                         },
