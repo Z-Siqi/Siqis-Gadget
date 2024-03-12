@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
@@ -78,10 +78,13 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
     var belowUnitInt by remember { mutableIntStateOf(-1) }
     var belowUnit by remember { mutableStateOf(false) }
     val unitInt = aboveUnitInt != -1 && belowUnitInt != -1
+    var aboveCurrent by remember { mutableStateOf(false) }
+    var belowCurrent by remember { mutableStateOf(false) }
 
     var aboveText by remember { mutableStateOf(false) }
-    val aboveState = aboveTextState.text.toString() != ""
-    if (aboveState && aboveText && unitInt) {
+    val aboveNoSpace = aboveTextState.text.toString() != ""
+    val aboveOneDot = aboveTextState.text.toString().count { it == '.' } <= 1
+    if (aboveNoSpace && aboveOneDot && aboveText && unitInt) {
         centerValue = aboveTextState.text.toString().toFloat()
         when (aboveUnitInt) {
             // cm
@@ -108,20 +111,21 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
             // foot
             3 -> when (belowUnitInt) {
                 0 -> editTextState(belowTextState, (centerValue * 12 * 2.54f))
-                1 -> editTextState(belowTextState, (centerValue * 12000 * 2.54f))
+                1 -> editTextState(belowTextState, (centerValue * 0.12f * 2.54f))
                 2 -> editTextState(belowTextState, (centerValue * 12))
                 3 -> editTextState(belowTextState, centerValue)
             }
         }
         aboveText = false
-    } else if (!aboveState && isVisible) LaunchedEffect(true) {
+    } else if (!aboveNoSpace || !aboveOneDot) LaunchedEffect(true) {
         belowTextState.clearText()
         aboveTextState.clearText()
         aboveText = false
     }
     var belowText by remember { mutableStateOf(false) }
-    val belowState = belowTextState.text.toString() != ""
-    if (belowState && belowText && unitInt) {
+    val belowNoSpace = belowTextState.text.toString() != ""
+    val belowOneDot = belowTextState.text.toString().count { it == '.' } <= 1
+    if (belowNoSpace && belowOneDot && belowText && unitInt) {
         centerValue = belowTextState.text.toString().toFloat()
         when (belowUnitInt) {
             // cm
@@ -148,13 +152,13 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
             // foot
             3 -> when (aboveUnitInt) {
                 0 -> editTextState(aboveTextState, (centerValue * 12 * 2.54f))
-                1 -> editTextState(aboveTextState, (centerValue * 12000 * 2.54f))
+                1 -> editTextState(aboveTextState, (centerValue * 0.12f * 2.54f))
                 2 -> editTextState(aboveTextState, (centerValue * 12))
                 3 -> editTextState(aboveTextState, centerValue)
             }
         }
         belowText = false
-    } else if (!belowState && isVisible) LaunchedEffect(true) {
+    } else if (!belowNoSpace || !belowOneDot) LaunchedEffect(true) {
         belowTextState.clearText()
         aboveTextState.clearText()
         belowText = false
@@ -193,9 +197,6 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                 shape = ShapeDefaults.Large,
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer),
             ) {
-                var aboveCurrent by remember { mutableStateOf(false) }
-                var belowCurrent by remember { mutableStateOf(false) }
-
                 val borderAbove = if (aboveCurrent) {
                     modifier.border(1.dp, MaterialTheme.colorScheme.secondary, ShapeDefaults.Medium)
                 } else {
@@ -240,7 +241,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                             } else {
                                 TextStyle(fontSize = 23.sp)
                             }
-                            BasicTextField2(modifier = modifier
+                            BasicTextField(modifier = modifier
                                 .fillMaxSize()
                                 .padding(start = 16.dp, end = 88.dp, top = 10.dp, bottom = 8.dp)
                                 .horizontalScroll(rememberScrollState()),
@@ -366,7 +367,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                             } else {
                                 TextStyle(fontSize = 23.sp)
                             }
-                            BasicTextField2(modifier = modifier
+                            BasicTextField(modifier = modifier
                                 .fillMaxSize()
                                 .padding(start = 16.dp, end = 88.dp, top = 10.dp, bottom = 8.dp)
                                 .horizontalScroll(rememberScrollState()),
@@ -460,8 +461,11 @@ private fun editTextState(
     textState: TextFieldState = rememberTextFieldState(),
     formula: Float
 ): TextFieldState {
+    val numberInt = formula.toString().substringAfterLast('.').substringBeforeLast('E').length
+    val convert = numberInt.toString().plus('f')
+    val convertResult = String.format("%.$convert", formula)
     textState.clearText()
-    textState.edit { insert(0, formula.toString()) }
+    textState.edit { insert(0, convertResult) }
     return textState
 }
 

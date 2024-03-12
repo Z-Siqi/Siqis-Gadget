@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
@@ -156,7 +156,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                 } else {
                     TextStyle(fontSize = 23.sp)
                 }
-                BasicTextField2(modifier = modifier
+                BasicTextField(modifier = modifier
                     .fillMaxSize()
                     .padding(start = 16.dp, end = 88.dp, top = 10.dp, bottom = 8.dp),
                     state = textFieldState,

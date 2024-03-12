@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -99,7 +99,7 @@ fun TypingLayout(navController: NavController, modifier: Modifier = Modifier) {
                         .verticalScroll(rememberScrollState())
                 ) {
                     val text2 = rememberTextFieldState()
-                    BasicTextField2(
+                    BasicTextField(
                         state = text2,
                         modifier.fillMaxSize()
                     )
