@@ -54,6 +54,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -101,8 +102,8 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
     )
     var showBottomSheet by remember { mutableStateOf(false) }
     var showAlertDialog by remember { mutableStateOf(false) }
-    var unit by remember { mutableIntStateOf(-1) }
-    var resultColor by remember { mutableIntStateOf(-1) }
+    var unit by rememberSaveable { mutableIntStateOf(-1) }
+    var resultColor by rememberSaveable { mutableIntStateOf(-1) }
     var preResultColor by remember { mutableIntStateOf(-1) }
 
     Column(
@@ -307,38 +308,38 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                 .height(cardHeight),
             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
         ) {
-            var originalUnit by remember { mutableStateOf("N/A") }
-            var unit001 by remember { mutableFloatStateOf(0F) } //pmol/L
-            var unit002 by remember { mutableFloatStateOf(0F) } //pmol/mL
-            var unit003 by remember { mutableFloatStateOf(0F) } //pmol/dL
-            var unit101 by remember { mutableFloatStateOf(0F) } //pg/L
-            var unit102 by remember { mutableFloatStateOf(0F) } //pg/mL
-            var unit103 by remember { mutableFloatStateOf(0F) } //pg/dL
-            var unit104 by remember { mutableFloatStateOf(0F) } //pg%
-            var unit201 by remember { mutableFloatStateOf(0F) } //nmol/L
-            var unit202 by remember { mutableFloatStateOf(0F) } //nmol/mL
-            var unit203 by remember { mutableFloatStateOf(0F) } //nmol/dL
-            var unit301 by remember { mutableFloatStateOf(0F) } //ng/L
-            var unit302 by remember { mutableFloatStateOf(0F) } //ng/mL
-            var unit303 by remember { mutableFloatStateOf(0F) } //ng/dL
-            var unit304 by remember { mutableFloatStateOf(0F) } //ng%
-            var unit401 by remember { mutableFloatStateOf(0F) } //µg/L
-            var unit402 by remember { mutableFloatStateOf(0F) } //µg/mL
-            var unit403 by remember { mutableFloatStateOf(0F) } //µg/dL
-            var unit501 by remember { mutableFloatStateOf(0F) } //mIU/L
-            var unit502 by remember { mutableFloatStateOf(0F) } //mIU/mL
-            var unit503 by remember { mutableFloatStateOf(0F) } //mIU/dL
-            var unit601 by remember { mutableFloatStateOf(0F) } //IU/L
-            var unit602 by remember { mutableFloatStateOf(0F) } //IU/mL
-            var unit603 by remember { mutableFloatStateOf(0F) } //IU/dL
-            var unit701 by remember { mutableFloatStateOf(0F) } //μIU/L
-            var unit702 by remember { mutableFloatStateOf(0F) } //μIU/mL
-            var unit703 by remember { mutableFloatStateOf(0F) } //μIU/dL
+            var originalUnit by rememberSaveable { mutableStateOf("N/A") }
+            var unit001 by rememberSaveable { mutableFloatStateOf(0F) } //pmol/L
+            var unit002 by rememberSaveable { mutableFloatStateOf(0F) } //pmol/mL
+            var unit003 by rememberSaveable { mutableFloatStateOf(0F) } //pmol/dL
+            var unit101 by rememberSaveable { mutableFloatStateOf(0F) } //pg/L
+            var unit102 by rememberSaveable { mutableFloatStateOf(0F) } //pg/mL
+            var unit103 by rememberSaveable { mutableFloatStateOf(0F) } //pg/dL
+            var unit104 by rememberSaveable { mutableFloatStateOf(0F) } //pg%
+            var unit201 by rememberSaveable { mutableFloatStateOf(0F) } //nmol/L
+            var unit202 by rememberSaveable { mutableFloatStateOf(0F) } //nmol/mL
+            var unit203 by rememberSaveable { mutableFloatStateOf(0F) } //nmol/dL
+            var unit301 by rememberSaveable { mutableFloatStateOf(0F) } //ng/L
+            var unit302 by rememberSaveable { mutableFloatStateOf(0F) } //ng/mL
+            var unit303 by rememberSaveable { mutableFloatStateOf(0F) } //ng/dL
+            var unit304 by rememberSaveable { mutableFloatStateOf(0F) } //ng%
+            var unit401 by rememberSaveable { mutableFloatStateOf(0F) } //µg/L
+            var unit402 by rememberSaveable { mutableFloatStateOf(0F) } //µg/mL
+            var unit403 by rememberSaveable { mutableFloatStateOf(0F) } //µg/dL
+            var unit501 by rememberSaveable { mutableFloatStateOf(0F) } //mIU/L
+            var unit502 by rememberSaveable { mutableFloatStateOf(0F) } //mIU/mL
+            var unit503 by rememberSaveable { mutableFloatStateOf(0F) } //mIU/dL
+            var unit601 by rememberSaveable { mutableFloatStateOf(0F) } //IU/L
+            var unit602 by rememberSaveable { mutableFloatStateOf(0F) } //IU/mL
+            var unit603 by rememberSaveable { mutableFloatStateOf(0F) } //IU/dL
+            var unit701 by rememberSaveable { mutableFloatStateOf(0F) } //μIU/L
+            var unit702 by rememberSaveable { mutableFloatStateOf(0F) } //μIU/mL
+            var unit703 by rememberSaveable { mutableFloatStateOf(0F) } //μIU/dL
 
 
             if (valueState.onCalculateClick) {
-                var unitNumber by remember { mutableIntStateOf(-1) }
-                var unitCalculate by remember { mutableFloatStateOf(0F) }
+                var unitNumber by rememberSaveable { mutableIntStateOf(-1) }
+                var unitCalculate by rememberSaveable { mutableFloatStateOf(0F) }
                 if (unit != -1) {
                     originalUnit = unitList[unit]
                     input = (textFieldState.text.toString().toFloat())

@@ -45,6 +45,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,16 +73,16 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
 
     val aboveTextState = rememberTextFieldState()
     val belowTextState = rememberTextFieldState()
-    var centerValue by remember { mutableFloatStateOf(0.0f) }
-    var aboveUnitInt by remember { mutableIntStateOf(-1) }
-    var aboveUnit by remember { mutableStateOf(false) }
-    var belowUnitInt by remember { mutableIntStateOf(-1) }
-    var belowUnit by remember { mutableStateOf(false) }
+    var centerValue by rememberSaveable { mutableFloatStateOf(0.0f) }
+    var aboveUnitInt by rememberSaveable { mutableIntStateOf(-1) }
+    var aboveUnit by rememberSaveable { mutableStateOf(false) }
+    var belowUnitInt by rememberSaveable { mutableIntStateOf(-1) }
+    var belowUnit by rememberSaveable { mutableStateOf(false) }
     val unitInt = aboveUnitInt != -1 && belowUnitInt != -1
-    var aboveCurrent by remember { mutableStateOf(false) }
-    var belowCurrent by remember { mutableStateOf(false) }
+    var aboveCurrent by rememberSaveable { mutableStateOf(false) }
+    var belowCurrent by rememberSaveable { mutableStateOf(false) }
 
-    var aboveText by remember { mutableStateOf(false) }
+    var aboveText by rememberSaveable { mutableStateOf(false) }
     val aboveNoSpace = aboveTextState.text.toString() != ""
     val aboveOneDot = aboveTextState.text.toString().count { it == '.' } <= 1
     if (aboveNoSpace && aboveOneDot && aboveText && unitInt) {
@@ -122,7 +123,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
         aboveTextState.clearText()
         aboveText = false
     }
-    var belowText by remember { mutableStateOf(false) }
+    var belowText by rememberSaveable { mutableStateOf(false) }
     val belowNoSpace = belowTextState.text.toString() != ""
     val belowOneDot = belowTextState.text.toString().count { it == '.' } <= 1
     if (belowNoSpace && belowOneDot && belowText && unitInt) {
