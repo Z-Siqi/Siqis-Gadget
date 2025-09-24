@@ -167,7 +167,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                         KeyboardType.Number,
                         ImeAction.Done
                     ),
-                    keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
+                    //keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
                     textStyle = textStyle,
                     inputTransformation = InputTransformation.byValue { current, new ->
                         if (new.any { it == '.' } && new.contains("""\d""".toRegex())) {

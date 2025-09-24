@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.R
 
+@Deprecated("")
 @Composable
 fun CalculateLayout(
     valueState: ValueState,
@@ -47,7 +48,6 @@ fun CalculateLayout(
     ) {
         Box {
             when (calculateMode) {
-                "circle" -> Circle(valueState)
                 "hormone_units_conversion" -> HormoneUnitConversion(valueState)
                 "unit_of_length" -> LengthUnitConversion()
                 else -> navController.popBackStack()

@@ -253,7 +253,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                                     KeyboardType.Number,
                                     ImeAction.Done
                                 ),
-                                keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
+                                //keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
                                 textStyle = textStyle,
                                 inputTransformation = InputTransformation.byValue { current, new ->
                                     aboveText = true
@@ -379,7 +379,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                                     KeyboardType.Number,
                                     ImeAction.Done
                                 ),
-                                keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
+                                //keyboardActions = KeyboardActions(onDone = { focus.clearFocus() }),
                                 textStyle = textStyle,
                                 inputTransformation = InputTransformation.byValue { current, new ->
                                     belowText = true
