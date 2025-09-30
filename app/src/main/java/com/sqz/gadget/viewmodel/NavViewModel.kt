@@ -1,9 +1,11 @@
 package com.sqz.gadget.viewmodel
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.NavRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,6 +42,11 @@ class NavViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Navigate controller handler
+     * @param navController NavHostController, expect [rememberNavController]
+     * @param state NavState, expect [collectAsState] for correct navigation state handling
+     */
     fun navController(
         navController: NavHostController,
         state: State<NavState>

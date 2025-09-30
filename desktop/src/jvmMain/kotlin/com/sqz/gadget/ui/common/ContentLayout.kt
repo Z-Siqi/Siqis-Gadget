@@ -23,7 +23,7 @@ fun ContentLayout(
 ) = Row(modifier = Modifier.background(MaterialTheme.colors.surface)) {
     Surface(color = Color.Transparent) { navigationRailLeft() }
     Surface(
-        modifier = modifier.weight(1f),
+        modifier = Modifier.weight(1f),
         color = Color.Transparent
     ) {
         Scaffold(

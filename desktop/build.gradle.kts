@@ -31,7 +31,6 @@ kotlin {
             implementation("androidx.annotation:annotation-jvm:1.9.1")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
-            implementation("org.jetbrains.compose.ui:ui-util:1.9.0")
         }
     }
 }

@@ -25,14 +25,16 @@ class CircleUnit {
         this.toCircle = null
     }
 
-    fun setCurrent(currentCircle: Circle?) {
+    fun setCurrent(currentCircle: Circle?): Circle? {
         this.checkUnits()
         this.currentCircle = currentCircle
+        return this.currentCircle
     }
 
-    fun setToUnit(toCircle: Circle?) {
+    fun setToUnit(toCircle: Circle?): Circle? {
         this.checkUnits()
         this.toCircle = toCircle
+        return this.toCircle
     }
 
     fun setUnit(currentCircle: Circle?, toCircle: Circle?) {
