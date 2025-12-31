@@ -99,7 +99,7 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                             valueState.calculateMode = "unit_of_length"
                             navController.navigate("CalculateLayout")
                         },
-                        text = "Length Unit Conversion",
+                        text = "Length Length Conversion",
                         painter = R.drawable.length,
                         contentDescription = "Circle",
                         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)

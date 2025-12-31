@@ -1,67 +1,65 @@
 package sqz.gadget.lib
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class CircleUnit {
     companion object {
-        /** Unit of Circle **/
+        /** Length of Circle **/
         enum class Circle { Area, Diameter, Circumference, Radius }
 
         /** Pi value **/
         const val PI = 3.141592653589793
     }
 
-    private var currentCircle: Circle?
-    private var toCircle: Circle?
+    private var currentCircle: MutableStateFlow<Circle?>
+    private var toCircle: MutableStateFlow<Circle?>
 
     constructor(currentCircle: Circle? = null, toCircle: Circle? = null) {
-        this.currentCircle = currentCircle
-        this.toCircle = toCircle
+        this.currentCircle = MutableStateFlow(currentCircle)
+        this.toCircle = MutableStateFlow(toCircle)
     }
 
     constructor() {
-        this.currentCircle = null
-        this.toCircle = null
+        this.currentCircle = MutableStateFlow(null)
+        this.toCircle = MutableStateFlow(null)
     }
 
     fun setCurrent(currentCircle: Circle?): Circle? {
         this.checkUnits()
-        this.currentCircle = currentCircle
-        return this.currentCircle
+        this.currentCircle.update { currentCircle }
+        return this.currentCircle.value
     }
 
     fun setToUnit(toCircle: Circle?): Circle? {
         this.checkUnits()
-        this.toCircle = toCircle
-        return this.toCircle
-    }
-
-    fun setUnit(currentCircle: Circle?, toCircle: Circle?) {
-        this.checkUnits()
-        this.setCurrent(currentCircle)
-        this.setToUnit(toCircle)
+        this.toCircle.update { toCircle }
+        return this.toCircle.value
     }
 
     private fun checkUnits() {
-        if (this.currentCircle == null || this.toCircle == null) {
+        if (this.currentCircle.value == null || this.toCircle.value == null) {
             return
         } else if (this.currentCircle == this.toCircle) {
-            throw IllegalArgumentException("Current Unit and To Unit are the same")
+            throw IllegalArgumentException("Current Length and To Length are the same")
         }
     }
 
-    fun getCurrentUnit(): Circle? {
-        return this.currentCircle
+    fun getCurrentUnit(): StateFlow<Circle?> {
+        return this.currentCircle.asStateFlow()
     }
 
-    fun getToUnit(): Circle? {
-        return this.toCircle
+    fun getToUnit(): StateFlow<Circle?> {
+        return this.toCircle.asStateFlow()
     }
 
     private fun fromArea(input: Double): Double {
-        val calculate = when (this.toCircle!!) {
-            Circle.Area -> throw IllegalArgumentException("Invalid Unit")
+        val calculate = when (this.toCircle.value!!) {
+            Circle.Area -> throw IllegalArgumentException("Invalid Length")
             Circle.Diameter -> sqrt((4 * input) / PI) // d = √4A/π
             Circle.Circumference -> 2 * sqrt(PI * input) // C = 2√πA
             Circle.Radius -> sqrt(input / PI) // r = √A/π
@@ -70,9 +68,9 @@ class CircleUnit {
     }
 
     private fun fromDiameter(input: Double): Double {
-        val calculate = when (this.toCircle!!) {
+        val calculate = when (this.toCircle.value!!) {
             Circle.Area -> PI * (input / 2).pow(2) // A = π(d/2)^2
-            Circle.Diameter -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Diameter -> throw IllegalArgumentException("Invalid Length")
             Circle.Circumference -> PI * input // C = πd
             Circle.Radius -> input / 2 // r = d/2
         }
@@ -80,32 +78,32 @@ class CircleUnit {
     }
 
     private fun fromCircumference(input: Double): Double {
-        val calculate = when (this.toCircle!!) {
+        val calculate = when (this.toCircle.value!!) {
             Circle.Area -> (input.pow(2)) / (4 * PI) // A = (C^2)/(4π)
             Circle.Diameter -> input / PI // d = C/π
-            Circle.Circumference -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Circumference -> throw IllegalArgumentException("Invalid Length")
             Circle.Radius -> input / (2 * PI) // r = C/2π
         }
         return calculate
     }
 
     private fun fromRadius(input: Double): Double {
-        val calculate = when (this.toCircle!!) {
+        val calculate = when (this.toCircle.value!!) {
             Circle.Area -> PI * input.pow(2) // A = πr^2
             Circle.Diameter -> 2 * input // d = 2r
             Circle.Circumference -> 2 * PI * input // C = 2πr
-            Circle.Radius -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Radius -> throw IllegalArgumentException("Invalid Length")
         }
         return calculate
     }
 
     fun calculate(input: Double): Double {
-        if (this.currentCircle == null || this.toCircle == null) {
-            throw NullPointerException("Current Unit or To Unit is null")
+        if (this.currentCircle.value == null || this.toCircle.value == null) {
+            throw NullPointerException("Current Length or To Length is null")
         } else {
             this.checkUnits()
         }
-        return when (this.currentCircle!!) {
+        return when (this.currentCircle.value!!) {
             Circle.Area -> this.fromArea(input)
             Circle.Diameter -> this.fromDiameter(input)
             Circle.Circumference -> this.fromCircumference(input)
@@ -115,7 +113,7 @@ class CircleUnit {
 
     private fun formulaFromArea(toCircle: Circle): String {
         return when (toCircle) {
-            Circle.Area -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Area -> throw IllegalArgumentException("Invalid Length")
             Circle.Diameter -> "d = √4A/π"
             Circle.Circumference -> "C = 2√πA"
             Circle.Radius -> "r = √A/π"
@@ -125,7 +123,7 @@ class CircleUnit {
     private fun formulaFromDiameter(toCircle: Circle): String {
         return when (toCircle) {
             Circle.Area -> "A = π(d/2)^2"
-            Circle.Diameter -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Diameter -> throw IllegalArgumentException("Invalid Length")
             Circle.Circumference -> "C = πd"
             Circle.Radius -> "r = d/2"
         }
@@ -135,7 +133,7 @@ class CircleUnit {
         return when (toCircle) {
             Circle.Area -> "A = C^2/4π"
             Circle.Diameter -> "d = C/π"
-            Circle.Circumference -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Circumference -> throw IllegalArgumentException("Invalid Length")
             Circle.Radius -> "r = C/2π"
         }
     }
@@ -145,24 +143,24 @@ class CircleUnit {
             Circle.Area -> "A = πr^2"
             Circle.Diameter -> "d = 2r"
             Circle.Circumference -> "C = 2πr"
-            Circle.Radius -> throw IllegalArgumentException("Invalid Unit")
+            Circle.Radius -> throw IllegalArgumentException("Invalid Length")
         }
     }
 
     fun getFormulaString(): String? {
-        if (this.currentCircle == null || this.toCircle == null) {
+        if (this.currentCircle.value == null || this.toCircle.value == null) {
             return null
         }
-        return when (this.currentCircle!!) {
-            Circle.Area -> this.formulaFromArea(this.toCircle!!)
-            Circle.Diameter -> this.formulaFromDiameter(this.toCircle!!)
-            Circle.Circumference -> this.formulaFromCircumference(this.toCircle!!)
-            Circle.Radius -> this.formulaFromRadius(this.toCircle!!)
+        return when (this.currentCircle.value!!) {
+            Circle.Area -> this.formulaFromArea(this.toCircle.value!!)
+            Circle.Diameter -> this.formulaFromDiameter(this.toCircle.value!!)
+            Circle.Circumference -> this.formulaFromCircumference(this.toCircle.value!!)
+            Circle.Radius -> this.formulaFromRadius(this.toCircle.value!!)
         }
     }
 
     fun reset() {
-        this.currentCircle = null
-        this.toCircle = null
+        this.currentCircle.update { null }
+        this.toCircle.update { null }
     }
 }

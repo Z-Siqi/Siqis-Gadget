@@ -43,9 +43,23 @@ class DashboardItem {
         )
     }
 
+    private fun lengthItem(onClick: (NavRoute) -> Unit) = Item(title = "Length Unit Conversion") {
+        ClickCard(
+            title = it,
+            icon = R.drawable.length,
+            onClick = { onClick(NavRoute.LengthUnit) },
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+
     @Composable
     fun CircleItem(onClick: (NavRoute) -> Unit) {
         this.circleItem(onClick = onClick).Content()
+    }
+
+    @Composable
+    fun LengthItem(onClick: (NavRoute) -> Unit) {
+        this.lengthItem(onClick = onClick).Content()
     }
 
     fun list(onClick: (NavRoute) -> Unit): List<Item> {
@@ -63,8 +77,9 @@ private fun ClickCard(
     modifier: Modifier = Modifier,
     description: String? = null,
 ) = BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
-    val widthBasedCap = maxWidth * 0.12f
+    val widthBasedCap = maxWidth * 0.1f
     val iconMax = min(widthBasedCap, 50.dp)
+    @Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
     OutlinedCard(
         modifier = Modifier
             .defaultMinSize(minHeight = 100.dp)

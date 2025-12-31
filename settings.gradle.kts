@@ -21,6 +21,6 @@ plugins {
 
 rootProject.name = "Gadget"
 
-include(":app")
+include(":android")
 include(":desktop")
 include(":lib")

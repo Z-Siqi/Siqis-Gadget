@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.layout.calculate.CircleUnitLayout
+import com.sqz.gadget.ui.layout.calculate.LengthUnitLayout
 import com.sqz.gadget.ui.layout.main.Dashboard
 import com.sqz.gadget.viewmodel.NavViewModel
 
@@ -37,6 +38,7 @@ fun MainLayout(context: Context, view: View, modifier: Modifier) {
             CircleUnitLayout(navViewModel = navViewModel, modifier = modifier)
         }
         composable(nav(NavRoute.LengthUnit)) { //TODO
+            LengthUnitLayout(navViewModel = navViewModel, modifier = modifier)
         }
     }
 }

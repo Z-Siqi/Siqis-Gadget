@@ -11,42 +11,37 @@ import sqz.gadget.lib.CircleUnit
 import sqz.gadget.lib.CircleUnit.Companion.Circle
 
 class CircleUnitViewModel : ViewModel() {
-    data class UnitState(
-        val currentUnit: Circle? = null,
-        val toUnit: Circle? = null,
-        val calculate: Double? = null,
-    )
 
     private val _circleUnit = CircleUnit()
 
-    private val _state = MutableStateFlow(UnitState())
-    val state: StateFlow<UnitState> = _state.asStateFlow()
+    val currentUnit: StateFlow<Circle?> = _circleUnit.getCurrentUnit()
+    val toUnit: StateFlow<Circle?> = _circleUnit.getToUnit()
+
+    private val _calculate: MutableStateFlow<Double?> = MutableStateFlow(null)
+    val calculate: StateFlow<Double?> = _calculate.asStateFlow()
 
     fun setCurrentUnit(unit: Circle?) {
-        if (_circleUnit.getToUnit() == unit && unit != null) {
+        if (_circleUnit.getToUnit().value == unit && unit != null) {
             _circleUnit.setToUnit(null)
             _circleUnit.setCurrent(unit)
-            _state.update { it.copy(currentUnit = unit, toUnit = null) }
         } else {
             _circleUnit.setCurrent(unit)
-            _state.update { it.copy(currentUnit = unit) }
         }
     }
 
     fun setToUnit(unit: Circle?) {
-        if (_circleUnit.getCurrentUnit() == unit && unit != null) this.reset() else {
+        if (_circleUnit.getCurrentUnit().value == unit && unit != null) this.reset() else {
             _circleUnit.setToUnit(unit)
-            _state.update { it.copy(toUnit = unit) }
         }
     }
 
     fun setCalculate(textFieldState: TextFieldState?) {
         if (textFieldState == null || textFieldState.text.isEmpty() || textFieldState.text.isBlank()) {
-            _state.update { it.copy(calculate = null) }
+            _calculate.update { null }
             return
         }
         try {
-            _state.update { it.copy(calculate = textFieldState.getDouble()) }
+            _calculate.update { textFieldState.getDouble() }
         } catch (e: NumberFormatException) {
             e.printStackTrace()
         }
@@ -54,7 +49,6 @@ class CircleUnitViewModel : ViewModel() {
 
     private fun reset() {
         _circleUnit.reset()
-        _state.update { it.copy(currentUnit = null, toUnit = null) }
     }
 
     fun getFormulaString(): String? {
@@ -62,7 +56,6 @@ class CircleUnitViewModel : ViewModel() {
     }
 
     fun calculate(value: Double): Double? {
-        _circleUnit.setUnit(_state.value.currentUnit, _state.value.toUnit)
         return try {
             _circleUnit.calculate(value)
         } catch (_: NullPointerException) {

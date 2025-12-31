@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sqz.gadget.R
-import com.sqz.gadget.ui.NavRoute
 import com.sqz.gadget.ui.common.bars.LargeTopAppBar
 import com.sqz.gadget.viewmodel.NavViewModel
 
@@ -29,9 +28,10 @@ fun Dashboard(
     LazyColumn {
         CategoryText("Calculate & Conversion")
         item {
-            dashboardItem.CircleItem {
-                navViewModel.navigate(it)
-            }
+            dashboardItem.CircleItem { navViewModel.navigate(it) }
+        }
+        item {
+            dashboardItem.LengthItem { navViewModel.navigate(it) }
         }
     }
 }

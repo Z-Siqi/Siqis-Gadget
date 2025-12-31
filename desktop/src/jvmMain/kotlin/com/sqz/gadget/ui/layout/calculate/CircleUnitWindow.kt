@@ -81,7 +81,7 @@ fun CircleUnitWindow() {
         }.pointerInput(Unit) {
             detectTapGestures { clearFocus() }
         },
-        topBar = { LabelTopAppBar("Circle Unit Conversion") }
+        topBar = { LabelTopAppBar("Circle Length Conversion") }
     ) {
         val scrollState = rememberScrollState()
         Column(
@@ -94,7 +94,7 @@ fun CircleUnitWindow() {
             Row {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     TitleText(
-                        text = "Current Unit:",
+                        text = "Current Length:",
                         modifier = Modifier.padding(top = 10.dp, bottom = 16.dp)
                     )
                     CircleUnitButtons(

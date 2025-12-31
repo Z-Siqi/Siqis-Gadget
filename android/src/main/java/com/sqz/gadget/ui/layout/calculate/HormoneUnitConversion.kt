@@ -204,7 +204,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                                 .padding(4.dp)
                                 .align(Alignment.Center),
                             text = if (unit == -1) {
-                                "Unit"
+                                "Length"
                             } else {
                                 unitList[unit]
                             },
@@ -267,7 +267,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                 modifier = modifier
                     .padding(start = 40.dp),
                 fontSize = 16.sp,
-                text = "Conversion Unit to (Hormone)",
+                text = "Conversion Length to (Hormone)",
                 fontWeight = FontWeight.Medium
             )
             if (valueState.calculateState) {
@@ -589,7 +589,7 @@ fun HormoneUnitConversion(valueState: ValueState, modifier: Modifier = Modifier)
                     .height(17.dp)
             ) {
                 Text(
-                    text = "Original Unit: $originalUnit",
+                    text = "Original Length: $originalUnit",
                     fontSize = 12.sp,
                     lineHeight = 12.sp,
                     textAlign = TextAlign.Justify,

@@ -12,33 +12,28 @@ import sqz.gadget.lib.CircleUnit.Companion.Circle
 
 class CircleUnitWindowHandler(key: String? = null) : InstanceManager(key) {
 
-    private val _toUnit: MutableStateFlow<Circle?> = MutableStateFlow(null)
-    val toUnit: StateFlow<Circle?> = _toUnit.asStateFlow()
+    private val _circleUnit = CircleUnit()
 
-    private val _currentUnit: MutableStateFlow<Circle?> = MutableStateFlow(null)
-    val currentUnit: StateFlow<Circle?> = _currentUnit.asStateFlow()
-
-    private val _circleUnit = CircleUnit(_currentUnit.value, _toUnit.value)
+    val currentUnit: StateFlow<Circle?> = _circleUnit.getCurrentUnit()
+    val toUnit: StateFlow<Circle?> = _circleUnit.getToUnit()
 
     fun setCurrent(currentCircle: Circle?) {
-        if (_circleUnit.getToUnit() == currentCircle && currentCircle != null) {
-            _toUnit.update { _circleUnit.setToUnit(null) }
-            _currentUnit.update { _circleUnit.setCurrent(currentCircle) }
+        if (_circleUnit.getToUnit().value == currentCircle && currentCircle != null) {
+            _circleUnit.setToUnit(null)
+            _circleUnit.setCurrent(currentCircle = currentCircle)
         } else {
-            _currentUnit.update { _circleUnit.setCurrent(currentCircle) }
+            _circleUnit.setCurrent(currentCircle)
         }
     }
 
     fun setToUnit(toCircle: Circle?) {
-        if (_circleUnit.getCurrentUnit() == toCircle && toCircle != null) this.reset() else {
-            _toUnit.update { _circleUnit.setToUnit(toCircle) }
+        if (_circleUnit.getCurrentUnit().value == toCircle && toCircle != null) this.reset() else {
+            _circleUnit.setToUnit(toCircle)
         }
     }
 
     private fun reset() {
         _circleUnit.reset()
-        _currentUnit.update { null }
-        _toUnit.update { null }
     }
 
     private val _calculateValue: MutableStateFlow<Double?> = MutableStateFlow(null)

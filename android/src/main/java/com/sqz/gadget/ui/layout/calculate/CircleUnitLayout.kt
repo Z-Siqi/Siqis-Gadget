@@ -58,7 +58,8 @@ fun CircleUnitLayout(
     modifier: Modifier = Modifier,
     viewModel: CircleUnitViewModel = viewModel()
 ) {
-    val state = viewModel.state.collectAsState().value
+    val currentUnit = viewModel.currentUnit.collectAsState().value
+    val toUnit = viewModel.toUnit.collectAsState().value
     val focusManager = LocalFocusManager.current
     val textFieldState = rememberTextFieldState()
     fun clearFocus() {
@@ -70,7 +71,7 @@ fun CircleUnitLayout(
         }
     }
     BackButtonTopAppBar(
-        title = "Circle Unit",
+        title = "Circle Length",
         modifier = modifier.pointerInput(Unit) {
             detectTapGestures { clearFocus() }
         },
@@ -81,12 +82,12 @@ fun CircleUnitLayout(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TitleText(
-                text = "Current Unit:",
+                text = "Current Length:",
                 modifier = Modifier.padding(top = 20.dp, bottom = 16.dp)
             )
             CircleUnitButtons(
-                selected = state.currentUnit, onClick = {
-                    if (state.currentUnit == it) viewModel.setCurrentUnit(null) else {
+                selected = currentUnit, onClick = {
+                    if (currentUnit == it) viewModel.setCurrentUnit(null) else {
                         viewModel.setCurrentUnit(it)
                     }
                 }
@@ -99,12 +100,12 @@ fun CircleUnitLayout(
                 modifier = Modifier.padding(top = 15.dp, bottom = 16.dp)
             )
             CircleUnitButtons(
-                selected = state.toUnit, onClick = {
-                    if (state.toUnit == it) viewModel.setToUnit(null) else {
+                selected = toUnit, onClick = {
+                    if (toUnit == it) viewModel.setToUnit(null) else {
                         viewModel.setToUnit(it)
                     }
-                }, drop = state.currentUnit, enabled = (state.currentUnit != null).also {
-                    if (!it && state.toUnit != null) viewModel.setToUnit(null)
+                }, drop = currentUnit, enabled = (currentUnit != null).also {
+                    if (!it && toUnit != null) viewModel.setToUnit(null)
                 }
             )
             Spacer(modifier = Modifier.padding(5.dp))
@@ -113,7 +114,7 @@ fun CircleUnitLayout(
                 text = "Current Number:",
                 modifier = Modifier
             )
-            val enabledInput: Boolean = state.currentUnit != null && state.toUnit != null
+            val enabledInput: Boolean = currentUnit != null && toUnit != null
             InputCard(enabledInput) {
                 BasicTextFieldForDouble(
                     textFieldState = textFieldState,
@@ -146,12 +147,13 @@ fun CircleUnitLayout(
                 modifier = Modifier
             )
             ResultCard {
+                val calculate = viewModel.calculate.collectAsState().value
                 Text(
                     text = viewModel.getFormulaString() ?: "Please select the unit",
                     fontSize = 20.sp
                 )
-                if (state.calculate != null && state.currentUnit != null && state.toUnit != null) {
-                    val calculatedValue = viewModel.calculate(state.calculate) ?: "ERROR"
+                if (calculate != null && currentUnit != null && toUnit != null) {
+                    val calculatedValue = viewModel.calculate(calculate) ?: "ERROR"
                     Text(text = "≈ $calculatedValue", fontSize = 20.sp)
                 }
                 if (viewModel.getFormulaString() != null) {
@@ -166,7 +168,7 @@ fun CircleUnitLayout(
                 }
             }
         }
-        if ((state.currentUnit == null || state.toUnit == null) &&
+        if ((currentUnit == null || toUnit == null) &&
             textFieldState.text.isNotEmpty()
         ) {
             textFieldState.clearText()

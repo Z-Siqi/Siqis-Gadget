@@ -178,7 +178,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
         ) {
             Text(
                 modifier = modifier.padding(top = 24.dp),
-                text = "Length Unit Conversion",
+                text = "Length Length Conversion",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 18.sp,
             )
@@ -224,7 +224,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                             .align(Alignment.Start)
                             .padding(start = 35.dp),
                         fontSize = 16.sp,
-                        text = "Conversion Unit",
+                        text = "Conversion Length",
                         fontWeight = FontWeight.Medium
                     )
                     OutlinedCard(
@@ -292,7 +292,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                                             .padding(4.dp)
                                             .align(Alignment.Center),
                                         text = if (aboveUnitInt == -1) {
-                                            "Unit"
+                                            "Length"
                                         } else {
                                             unitList[aboveUnitInt]
                                         },
@@ -350,7 +350,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                             .align(Alignment.Start)
                             .padding(start = 35.dp),
                         fontSize = 16.sp,
-                        text = "Conversion Unit",
+                        text = "Conversion Length",
                         fontWeight = FontWeight.Medium
                     )
                     OutlinedCard(
@@ -418,7 +418,7 @@ fun LengthUnitConversion(modifier: Modifier = Modifier) {
                                             .padding(4.dp)
                                             .align(Alignment.Center),
                                         text = if (belowUnitInt == -1) {
-                                            "Unit"
+                                            "Length"
                                         } else {
                                             unitList[belowUnitInt]
                                         },
