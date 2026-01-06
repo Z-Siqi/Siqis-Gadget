@@ -37,7 +37,7 @@ fun MainLayout(context: Context, view: View, modifier: Modifier) {
         composable(nav(NavRoute.CircleUnit)) {
             CircleUnitLayout(navViewModel = navViewModel, modifier = modifier)
         }
-        composable(nav(NavRoute.LengthUnit)) { //TODO
+        composable(nav(NavRoute.LengthUnit)) {
             LengthUnitLayout(navViewModel = navViewModel, modifier = modifier)
         }
     }

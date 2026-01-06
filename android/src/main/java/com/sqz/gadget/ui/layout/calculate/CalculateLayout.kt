@@ -49,7 +49,6 @@ fun CalculateLayout(
         Box {
             when (calculateMode) {
                 "hormone_units_conversion" -> HormoneUnitConversion(valueState)
-                "unit_of_length" -> LengthUnitConversion()
                 else -> navController.popBackStack()
             }
             Column(

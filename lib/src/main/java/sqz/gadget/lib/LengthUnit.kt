@@ -3,10 +3,8 @@ package sqz.gadget.lib
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class LengthUnit(
-    private val maxFractionDigits: Int = 8,
-    private val rounding: RoundingMode = RoundingMode.HALF_UP
-) {
+class LengthUnit : UnitConverter {
+    constructor(maxFractionDigits: Int = 8) : super(maxFractionDigits = maxFractionDigits)
 
     enum class Length {
         // International System of Units
@@ -52,30 +50,13 @@ class LengthUnit(
      * Perform numerical conversions
      * (Double calculation, internally using BigDecimal to maintain accuracy).
      */
-    fun convert(value: Double, from: Length, to: Length): Double {
+    @Override
+    override fun convert(value: Double, from: Any, to: Any): Double {
+        if (from !is Length || to !is Length) throw IllegalArgumentException("Invalid unit type")
         if (from == to) return value
         val valueInBigDecimal = value.toBigDecimal()
         val inMeters = valueInBigDecimal.multiply(toMeterFactor.getValue(from))
         val result = inMeters.divide(toMeterFactor.getValue(to), maxFractionDigits + 4, rounding)
         return result.toDouble()
-    }
-
-    /**
-     * Result formatting: maximum maxFractionDigits decimal places, remove trailing zeros; avoid
-     * scientific notation.
-     */
-    fun format(value: Double): String {
-        val bd = value.toBigDecimal()
-            .setScale(maxFractionDigits, rounding)
-            .stripTrailingZeros()
-        return bd.toPlainString()
-    }
-
-    /**
-     * Attempt to parse the input text as Double; return null if unsuccessful.
-     */
-    fun parse(input: String?): Double? {
-        if (input.isNullOrBlank()) return null
-        return input.toDoubleOrNull()
     }
 }
