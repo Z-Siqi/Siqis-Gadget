@@ -1,6 +1,7 @@
 package com.sqz.gadget.ui.common.bars
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -67,4 +68,59 @@ fun Modifier.verticalScrollWithFixedScrollBar(): Modifier {
         scrollBarColor = MaterialTheme.colorScheme.secondary,
     )
     return verticalColumnScrollbar.verticalScroll(scrollState)
+}
+
+@Composable
+fun Modifier.horizontalRowScrollbar(
+    scrollState: ScrollState,
+    height: Dp = 4.dp,
+    showScrollBar: Boolean = true,
+    scrollBarTrackColor: Color = Color.Gray,
+    scrollBarColor: Color = Color.Black,
+    scrollBarCornerRadius: Float = 4f,
+    endPadding: Float = 12f,
+    startEndPadding: Float = 0f,
+): Modifier {
+    return if (showScrollBar) drawWithContent {
+        val startEnd = if (startEndPadding == 0f) 0f else startEndPadding / 2
+        // Draw the row's content
+        drawContent()
+        // Dimensions and calculations
+        val viewportWidth = this.size.width - startEndPadding
+        val totalContentWidth = scrollState.maxValue.toFloat() + viewportWidth
+        val scrollValue = scrollState.value.toFloat()
+        // Compute scrollbar width and position
+        val scrollBarWidth =
+            (viewportWidth / totalContentWidth) * viewportWidth
+        val scrollBarStartOffset =
+            (scrollValue / totalContentWidth) * viewportWidth
+        // Draw the track (disable: set scrollBarTrackColor to Color.Transparent)
+        drawRoundRect(
+            cornerRadius = CornerRadius(scrollBarCornerRadius),
+            color = scrollBarTrackColor,
+            topLeft = Offset(startEnd, this.size.height - endPadding),
+            size = Size(viewportWidth, height.toPx()),
+        )
+        // Draw the scrollbar
+        drawRoundRect(
+            cornerRadius = CornerRadius(scrollBarCornerRadius),
+            color = scrollBarColor,
+            topLeft = Offset(scrollBarStartOffset + startEnd, this.size.height - endPadding),
+            size = Size(scrollBarWidth, height.toPx())
+        )
+    } else drawWithContent {
+        drawContent()
+    }
+}
+
+@Composable
+fun Modifier.horizontalScrollWithFixedScrollBar(): Modifier {
+    val scrollState = rememberScrollState()
+    val horizontalColumnScrollbar = this.horizontalRowScrollbar(
+        scrollState = scrollState,
+        showScrollBar = scrollState.canScrollBackward || scrollState.canScrollForward,
+        scrollBarTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+        scrollBarColor = MaterialTheme.colorScheme.secondary,
+    )
+    return horizontalColumnScrollbar.horizontalScroll(scrollState)
 }

@@ -52,6 +52,15 @@ class DashboardItem {
         )
     }
 
+    private fun hormoneItem(onClick: (NavRoute) -> Unit) = Item(title = "Hormone Units Conversion") {
+        ClickCard(
+            title = it,
+            icon = R.drawable.calculate,
+            onClick = { onClick(NavRoute.HormoneUnit) },
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+
     @Composable
     fun CircleItem(onClick: (NavRoute) -> Unit) {
         this.circleItem(onClick = onClick).Content()
@@ -60,6 +69,11 @@ class DashboardItem {
     @Composable
     fun LengthItem(onClick: (NavRoute) -> Unit) {
         this.lengthItem(onClick = onClick).Content()
+    }
+
+    @Composable
+    fun HormoneItem(onClick: (NavRoute) -> Unit) {
+        this.hormoneItem(onClick = onClick).Content()
     }
 
     fun list(onClick: (NavRoute) -> Unit): List<Item> {

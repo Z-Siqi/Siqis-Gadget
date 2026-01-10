@@ -33,6 +33,9 @@ fun Dashboard(
         item {
             dashboardItem.LengthItem { navViewModel.navigate(it) }
         }
+        item {
+            dashboardItem.HormoneItem { navViewModel.navigate(it) }
+        }
     }
 }
 

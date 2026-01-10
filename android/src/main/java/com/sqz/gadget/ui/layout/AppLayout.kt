@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -40,19 +38,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.R
 import com.sqz.gadget.ui.common.bars.LargeTopAppBar
-import com.sqz.gadget.ui.layout.calculate.ValueState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun AppLayout(valueState: ValueState, navController: NavController, modifier: Modifier = Modifier) {
-    LaunchedEffect(true) {
-        valueState.calculateState = false
-    }
+fun AppLayout(navController: NavController, modifier: Modifier = Modifier) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     Scaffold(
@@ -84,37 +77,31 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                 item {
                     AppCard(
                         intent = {
-                            valueState.calculateMode = "circle"
                             navController.navigate("CalculateLayout")
                         },
                         text = "Calculate The Circle",
                         painter = R.drawable.circle,
                         contentDescription = "Circle",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )
                 }
                 item {
                     AppCard(
                         intent = {
-                            valueState.calculateMode = "unit_of_length"
                             navController.navigate("CalculateLayout")
                         },
                         text = "Length Length Conversion",
                         painter = R.drawable.length,
                         contentDescription = "Circle",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
-                    )
+                        )
                 }
                 item {
                     AppCard(
                         intent = {
-                            valueState.calculateMode = "hormone_units_conversion"
                             navController.navigate("CalculateLayout")
                         },
                         text = "Hormone Units Conversion",
                         painter = R.drawable.calculate,
                         contentDescription = "Circle",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )
                 }
                 item {
@@ -132,7 +119,6 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                         text = "Check the Screen",
                         painter = R.drawable.screen,
                         contentDescription = "Screen",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )
                 }
                 item {
@@ -141,7 +127,6 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                         text = "System Information",
                         painter = R.drawable.system_info,
                         contentDescription = "Screen",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )
                 }
                 item {
@@ -150,7 +135,6 @@ fun AppLayout(valueState: ValueState, navController: NavController, modifier: Mo
                         text = "Test Typing",
                         painter = R.drawable.text,
                         contentDescription = "text",
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                     )
                 }
             }
@@ -164,7 +148,6 @@ private fun AppCard(
     text: String,
     painter: Int,
     contentDescription: String,
-    colors: CardColors,
     modifier: Modifier = Modifier,
 ) {
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -207,6 +190,5 @@ private fun AppCard(
 @Composable
 private fun Preview() {
     val navController = rememberNavController()
-    val valueState: ValueState = viewModel()
-    AppLayout(valueState, navController)
+    AppLayout(navController)
 }

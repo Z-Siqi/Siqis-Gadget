@@ -14,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,8 +22,6 @@ import com.sqz.gadget.ui.layout.AppLayout
 import com.sqz.gadget.ui.layout.ScreenLayout
 import com.sqz.gadget.ui.layout.SystemInfoLayout
 import com.sqz.gadget.ui.layout.TypingLayout
-import com.sqz.gadget.ui.layout.calculate.CalculateLayout
-import com.sqz.gadget.ui.layout.calculate.ValueState
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
 import com.sqz.gadget.ui.theme.SystemBarsColor
 
@@ -48,14 +45,13 @@ class MainActivity : ComponentActivity() {
                 }
 
                 if (!newModel) Surface(modifier = Modifier.fillMaxSize()) {
-                    val valueState: ValueState = viewModel()
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
                         startDestination = "AppLayout"
                     ) {
                         composable("AppLayout") {
-                            AppLayout(valueState, navController)
+                            AppLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceVariant.toArgb()
                         }
                         composable("ScreenLayout") {
@@ -66,10 +62,10 @@ class MainActivity : ComponentActivity() {
                             SystemInfoLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
                         }
-                        composable("CalculateLayout") {
+                        /*composable("CalculateLayout") {
                             CalculateLayout(valueState, navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }
+                        }*/
                         composable("TypingLayout") {
                             TypingLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()

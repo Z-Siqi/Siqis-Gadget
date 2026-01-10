@@ -60,6 +60,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sqz.gadget.ui.common.BasicTextFieldForDouble
 import com.sqz.gadget.ui.common.bars.BackButtonTopAppBar
 import com.sqz.gadget.ui.common.bars.verticalColumnScrollbar
+import com.sqz.gadget.ui.common.bars.verticalScrollWithFixedScrollBar
 import com.sqz.gadget.ui.common.pxToDpInt
 import com.sqz.gadget.viewmodel.LengthUnitViewModel
 import com.sqz.gadget.viewmodel.LengthUnitViewModel.SelectedState
@@ -81,6 +82,7 @@ fun LengthUnitLayout(
         }
     ) {
         Column(
+            modifier = Modifier.verticalScrollWithFixedScrollBar(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
