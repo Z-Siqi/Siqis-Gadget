@@ -13,12 +13,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -90,16 +94,27 @@ private fun InfoCard(screenInfo: AndroidScreenInfo) {
                     .verticalScrollWithFixedScrollBar()
                     .padding(8.dp)
             ) {
+                val onPrimaryContainer = MaterialTheme.colorScheme.onPrimaryContainer
                 data.entries.forEachIndexed { index, (description, value) ->
                     if (index != 0) {
                         HorizontalDivider(modifier = Modifier.padding(4.dp))
                     }
-                    Text(text = description)
-                    if (value != null) Text(
-                        text = value.toString(),
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                    val text = remember(description, value) {
+                        buildAnnotatedString {
+                            append(description)
+                            if (value != null) {
+                                withStyle(
+                                    SpanStyle(
+                                        fontWeight = FontWeight.Medium,
+                                        color = onPrimaryContainer
+                                    )
+                                ) {
+                                    append(value.toString())
+                                }
+                            }
+                        }
+                    }
+                    Text(text = text)
                 }
             }
         }
