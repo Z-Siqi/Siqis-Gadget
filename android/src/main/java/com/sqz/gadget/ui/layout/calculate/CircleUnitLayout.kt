@@ -49,7 +49,7 @@ import com.sqz.gadget.ui.common.getDouble
 import com.sqz.gadget.ui.common.setAll
 import com.sqz.gadget.viewmodel.CircleUnitViewModel
 import com.sqz.gadget.viewmodel.NavViewModel
-import sqz.gadget.lib.CircleUnit.Companion.Circle
+import sqz.gadget.lib.calculate.CircleUnit.Companion.Circle
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable

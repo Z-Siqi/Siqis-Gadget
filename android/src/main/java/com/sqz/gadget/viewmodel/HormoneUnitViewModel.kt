@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import sqz.gadget.lib.HormoneUnit
-import sqz.gadget.lib.HormoneUnit.ConcentrationUnit.Companion.asSortedList
+import sqz.gadget.lib.calculate.HormoneUnit
+import sqz.gadget.lib.calculate.HormoneUnit.ConcentrationUnit.Companion.asSortedList
 
 class HormoneUnitViewModel : ViewModel() {
     private val hormoneUnit = HormoneUnit(maxFractionDigits = 8)

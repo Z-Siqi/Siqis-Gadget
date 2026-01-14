@@ -1,7 +1,6 @@
-package sqz.gadget.lib
+package sqz.gadget.lib.calculate
 
 import java.math.BigDecimal
-import java.math.RoundingMode
 
 class LengthUnit : UnitConverter {
     constructor(maxFractionDigits: Int = 8) : super(maxFractionDigits = maxFractionDigits)

@@ -1,4 +1,4 @@
-package sqz.gadget.lib
+package sqz.gadget.lib.calculate
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

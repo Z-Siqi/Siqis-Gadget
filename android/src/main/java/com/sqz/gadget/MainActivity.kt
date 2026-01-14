@@ -19,7 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.MainLayout
 import com.sqz.gadget.ui.layout.AppLayout
-import com.sqz.gadget.ui.layout.ScreenLayout
 import com.sqz.gadget.ui.layout.SystemInfoLayout
 import com.sqz.gadget.ui.layout.TypingLayout
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
@@ -54,10 +53,10 @@ class MainActivity : ComponentActivity() {
                             AppLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceVariant.toArgb()
                         }
-                        composable("ScreenLayout") {
+                        /*composable("ScreenLayout") {
                             ScreenLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }
+                        }*/
                         composable("SystemInfoLayout") {
                             SystemInfoLayout(navController)
                             window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()

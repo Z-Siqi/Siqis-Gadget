@@ -1,7 +1,7 @@
 package sqz.gadget.lib.test
 
-import sqz.gadget.lib.CircleUnit
-import sqz.gadget.lib.CircleUnit.Companion
+import sqz.gadget.lib.calculate.CircleUnit
+import sqz.gadget.lib.calculate.CircleUnit.Companion
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

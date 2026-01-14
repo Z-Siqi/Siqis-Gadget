@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import sqz.gadget.lib.CircleUnit
-import sqz.gadget.lib.CircleUnit.Companion.Circle
+import sqz.gadget.lib.calculate.CircleUnit
+import sqz.gadget.lib.calculate.CircleUnit.Companion.Circle
 
 class CircleUnitWindowHandler(key: String? = null) : InstanceManager(key) {
 

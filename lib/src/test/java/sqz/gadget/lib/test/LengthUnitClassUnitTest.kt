@@ -1,6 +1,6 @@
 package sqz.gadget.lib.test
 
-import sqz.gadget.lib.LengthUnit
+import sqz.gadget.lib.calculate.LengthUnit
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

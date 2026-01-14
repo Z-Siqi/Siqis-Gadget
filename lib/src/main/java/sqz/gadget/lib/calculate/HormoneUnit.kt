@@ -1,4 +1,4 @@
-package sqz.gadget.lib
+package sqz.gadget.lib.calculate
 
 import java.math.BigDecimal
 import java.math.MathContext

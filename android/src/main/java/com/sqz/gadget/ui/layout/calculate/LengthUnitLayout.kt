@@ -65,7 +65,7 @@ import com.sqz.gadget.ui.common.pxToDpInt
 import com.sqz.gadget.viewmodel.LengthUnitViewModel
 import com.sqz.gadget.viewmodel.LengthUnitViewModel.SelectedState
 import com.sqz.gadget.viewmodel.NavViewModel
-import sqz.gadget.lib.LengthUnit
+import sqz.gadget.lib.calculate.LengthUnit
 
 @Composable
 fun LengthUnitLayout(

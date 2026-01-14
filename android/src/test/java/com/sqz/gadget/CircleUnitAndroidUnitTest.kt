@@ -2,8 +2,8 @@ package com.sqz.gadget
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import sqz.gadget.lib.CircleUnit
-import sqz.gadget.lib.CircleUnit.Companion
+import sqz.gadget.lib.calculate.CircleUnit
+import sqz.gadget.lib.calculate.CircleUnit.Companion
 
 class CircleUnitAndroidUnitTest {
 

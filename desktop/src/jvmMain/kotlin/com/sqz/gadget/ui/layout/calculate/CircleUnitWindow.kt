@@ -56,7 +56,7 @@ import com.sqz.gadget.ui.common.DesktopInputForDouble
 import com.sqz.gadget.ui.common.bars.LabelTopAppBar
 import com.sqz.gadget.ui.common.getDouble
 import com.sqz.gadget.ui.common.setAll
-import sqz.gadget.lib.CircleUnit.Companion.Circle
+import sqz.gadget.lib.calculate.CircleUnit.Companion.Circle
 
 @Composable
 fun CircleUnitWindow() {

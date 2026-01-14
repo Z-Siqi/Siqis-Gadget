@@ -80,8 +80,8 @@ import com.sqz.gadget.ui.common.*
 import com.sqz.gadget.ui.theme.Typography
 import com.sqz.gadget.viewmodel.HormoneUnitViewModel
 import com.sqz.gadget.viewmodel.NavViewModel
-import sqz.gadget.lib.HormoneUnit
-import sqz.gadget.lib.HormoneUnit.ConcentrationUnit.Companion.asSortedList
+import sqz.gadget.lib.calculate.HormoneUnit
+import sqz.gadget.lib.calculate.HormoneUnit.ConcentrationUnit.Companion.asSortedList
 
 @Composable
 fun HormoneUnitLayout(
