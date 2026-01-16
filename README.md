@@ -14,4 +14,4 @@
 * Desktop (in developing...)
 
 If you wanna try, just click:
-[Download](https://github.com/Z-Siqi/Siqis-Gadget/raw/master/app/release/android-release.apk)
+[Download](https://github.com/Z-Siqi/Siqis-Gadget/raw/refs/heads/master/android/release/android-release.apk)
