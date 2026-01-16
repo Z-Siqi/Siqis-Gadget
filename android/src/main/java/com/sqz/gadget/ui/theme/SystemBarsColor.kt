@@ -3,13 +3,10 @@ package com.sqz.gadget.ui.theme
 import android.os.Build
 import android.view.Window
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowInsetsControllerCompat
@@ -71,22 +68,21 @@ class SystemBarsColor private constructor() {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             this.SetSystemBarsColor(window)
         } else {
-            this.DrawSystemBarsBgColor(window)
+            this.DrawButtonNavBarBgColor(window)
         }
         // Set system bars UI light or dark mode
         val barsColor = barsColor.collectAsState().value
-        val controller = WindowInsetsControllerCompat(window, window.decorView)
-        controller.isAppearanceLightStatusBars = !barsColor.lightStateBar
-        controller.isAppearanceLightNavigationBars = !barsColor.lightNavBar
+        SideEffect {
+            val controller = WindowInsetsControllerCompat(window, window.decorView)
+            controller.isAppearanceLightStatusBars = !barsColor.lightStateBar
+            controller.isAppearanceLightNavigationBars = !barsColor.lightNavBar
+        }
     }
 
     @RequiresApi(35)
     @Composable
-    private fun DrawSystemBarsBgColor(window: Window) {
+    private fun DrawButtonNavBarBgColor(window: Window) {
         val barsColor = barsColor.collectAsState().value
-        Spacer( // Add state bar for Android 15
-            modifier = Modifier.fillMaxSize() then Modifier.background(barsColor.stateBgColor)
-        )
         @Suppress("DEPRECATION") // Set nav bar color for non-gesture nav mode
         window.navigationBarColor = barsColor.navBgColor.toArgb()
     }

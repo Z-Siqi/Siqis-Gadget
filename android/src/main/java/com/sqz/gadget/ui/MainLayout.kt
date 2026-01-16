@@ -10,17 +10,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.common.AndroidScreenInfo
+import com.sqz.gadget.common.AndroidSystemInfo
 import com.sqz.gadget.ui.layout.calculate.CircleUnitLayout
 import com.sqz.gadget.ui.layout.calculate.HormoneUnitLayout
 import com.sqz.gadget.ui.layout.calculate.LengthUnitLayout
-import com.sqz.gadget.ui.layout.info.ScreenLayout
+import com.sqz.gadget.ui.layout.info.ScreenInfoLayout
+import com.sqz.gadget.ui.layout.info.SystemInfoLayout
 import com.sqz.gadget.ui.layout.main.Dashboard
 import com.sqz.gadget.viewmodel.NavViewModel
 
 enum class NavRoute {
     Dashboard,
     CircleUnit, LengthUnit, HormoneUnit,
-    ScreenInfo, SystemInfo, TypingTest
+    ScreenInfo, SystemInfo
 }
 
 @Composable
@@ -47,10 +49,17 @@ fun MainLayout(context: Context, view: View, modifier: Modifier) {
             HormoneUnitLayout(navViewModel = navViewModel, modifier = modifier)
         }
         composable(nav(NavRoute.ScreenInfo)) {
-            ScreenLayout(
+            ScreenInfoLayout(
                 navViewModel = navViewModel,
-                screenInfo = AndroidScreenInfo(view, context),
+                screenInfo = AndroidScreenInfo(view = view, ctx = context),
                 modifier = modifier,
+            )
+        }
+        composable(nav(NavRoute.SystemInfo)) {
+            SystemInfoLayout(
+                navViewModel = navViewModel,
+                systemInfo = AndroidSystemInfo(ctx = context),
+                modifier = Modifier,
             )
         }
     }

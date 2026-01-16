@@ -1,9 +1,12 @@
 package com.sqz.gadget.ui.common.bars
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
@@ -35,15 +38,17 @@ fun LargeTopAppBar(
         state = rememberTopAppBarState()
     )
 ) {
-    val disableMove = if (!isLandscape()) Modifier else {
+    val disableMove = if (isLandscape()) Modifier else {
         Modifier.pointerInteropFilter(null) { true }
     }
     LargeTopAppBar(
         modifier = modifier then disableMove,
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
             scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            navigationIconContentColor = Color.Unspecified,
             titleContentColor = MaterialTheme.colorScheme.secondary,
+            actionIconContentColor = Color.Unspecified
         ),
         title = {
             Text(
@@ -86,7 +91,14 @@ fun LargeTopAppBar(
                 .padding(innerPadding)
                 .fillMaxSize(),
             color = backgroundColor,
-            content = content
-        )
+        ) {
+            val windowInsetModifier = if (!isLandscape()) Modifier else {
+                Modifier.windowInsetsPadding(WindowInsets.displayCutout)
+            }
+            Box(
+                modifier = windowInsetModifier,
+                content = { content() }
+            )
+        }
     }
 }

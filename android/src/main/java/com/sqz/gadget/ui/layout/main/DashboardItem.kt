@@ -21,17 +21,17 @@ class DashboardItem {
                     title = "Calculate The Circle",
                     icon = R.drawable.circle,
                     description = "Calculate the area, circumference and diameter",
-                    navGoal = NavRoute.CircleUnit
+                    navGoal = NavRoute.CircleUnit,
                 ),
                 Option(
                     title = "Length Unit Conversion",
                     icon = R.drawable.length,
-                    navGoal = NavRoute.LengthUnit
+                    navGoal = NavRoute.LengthUnit,
                 ),
                 Option(
                     title = "Hormone Units Conversion",
                     icon = R.drawable.calculate,
-                    navGoal = NavRoute.HormoneUnit
+                    navGoal = NavRoute.HormoneUnit,
                 ),
             )
         ),
@@ -40,7 +40,12 @@ class DashboardItem {
                 Option(
                     title = "Screen Information",
                     icon = R.drawable.screen,
-                    navGoal = NavRoute.ScreenInfo
+                    navGoal = NavRoute.ScreenInfo,
+                ),
+                Option(
+                    title = "System Information",
+                    icon = R.drawable.system_info,
+                    navGoal = NavRoute.SystemInfo,
                 ),
             )
         ),

@@ -7,24 +7,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.sqz.gadget.ui.MainLayout
-import com.sqz.gadget.ui.layout.AppLayout
-import com.sqz.gadget.ui.layout.SystemInfoLayout
-import com.sqz.gadget.ui.layout.TypingLayout
 import com.sqz.gadget.ui.theme.SiqisGadgetTheme
 import com.sqz.gadget.ui.theme.SystemBarsColor
-
-private const val newModel: Boolean = true
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,43 +32,11 @@ class MainActivity : ComponentActivity() {
                 } else {
                     SystemBarsColor.current.setLightBars(lightState = false, lightNav = false)
                 }
-
-                if (!newModel) Surface(modifier = Modifier.fillMaxSize()) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = "AppLayout"
-                    ) {
-                        composable("AppLayout") {
-                            AppLayout(navController)
-                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceVariant.toArgb()
-                        }
-                        /*composable("ScreenLayout") {
-                            ScreenLayout(navController)
-                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }*/
-                        composable("SystemInfoLayout") {
-                            SystemInfoLayout(navController)
-                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }
-                        /*composable("CalculateLayout") {
-                            CalculateLayout(valueState, navController)
-                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }*/
-                        composable("TypingLayout") {
-                            TypingLayout(navController)
-                            window.navigationBarColor = MaterialTheme.colorScheme.surfaceContainer.toArgb()
-                        }
-                    }
-                }
-
                 val notButtonNav = WindowInsets.navigationBars.getBottom(LocalDensity.current) < 100
                 val windowInsetsPadding = if (!notButtonNav) // if nav mode is not gesture mode
                     Modifier.windowInsetsPadding(WindowInsets.navigationBars) else Modifier
                 Surface(
-                    modifier = Modifier
-                        .windowInsetsPadding(WindowInsets.statusBars) // Do not override state bar area
-                        .fillMaxSize() then windowInsetsPadding,
+                    modifier = Modifier.fillMaxSize() then windowInsetsPadding,
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MainLayout(

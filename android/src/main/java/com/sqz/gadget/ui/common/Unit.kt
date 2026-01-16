@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 @ReadOnlyComposable
 fun isLandscape(): Boolean {
     val containerSize = LocalWindowInfo.current.containerSize
-    return containerSize.height > (containerSize.width * 1.1)
+    return (containerSize.width * 1.1) > containerSize.height
 }
 
 @Composable

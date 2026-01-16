@@ -11,10 +11,27 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 23,
-      "versionName": "0.2.3",
-      "outputFile": "app-release.apk"
+      "versionCode": 30,
+      "versionName": "0.3.0",
+      "outputFile": "android-release.apk"
     }
   ],
-  "elementType": "File"
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/android-release.dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/android-release.dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 24
 }

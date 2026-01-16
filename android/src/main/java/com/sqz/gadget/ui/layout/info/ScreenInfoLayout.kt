@@ -32,7 +32,11 @@ import com.sqz.gadget.ui.common.bars.verticalScrollWithFixedScrollBar
 import com.sqz.gadget.viewmodel.NavViewModel
 
 @Composable
-fun ScreenLayout(navViewModel: NavViewModel, screenInfo: AndroidScreenInfo, modifier: Modifier) {
+fun ScreenInfoLayout(
+    navViewModel: NavViewModel,
+    screenInfo: AndroidScreenInfo,
+    modifier: Modifier,
+) {
     val focusManager = LocalFocusManager.current
     BackButtonTopAppBar(
         title = "Screen Information",
@@ -102,16 +106,12 @@ private fun InfoCard(screenInfo: AndroidScreenInfo) {
                     val text = remember(description, value) {
                         buildAnnotatedString {
                             append(description)
-                            if (value != null) {
-                                withStyle(
-                                    SpanStyle(
-                                        fontWeight = FontWeight.Medium,
-                                        color = onPrimaryContainer
-                                    )
-                                ) {
-                                    append(value.toString())
-                                }
-                            }
+                            if (value != null) withStyle(
+                                SpanStyle(
+                                    fontWeight = FontWeight.Medium,
+                                    color = onPrimaryContainer
+                                )
+                            ) { append(value.toString()) }
                         }
                     }
                     Text(text = text)
@@ -125,7 +125,7 @@ private fun InfoCard(screenInfo: AndroidScreenInfo) {
 @Composable
 private fun Preview() {
     val v = LocalView.current
-    ScreenLayout(
+    ScreenInfoLayout(
         navViewModel = viewModel(),
         screenInfo = AndroidScreenInfo(v, v.context),
         modifier = Modifier
